@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFest Registration - Retro Gaming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+    <!-- Sound Toggle Button -->
+    <div class="sound-toggle">
+        <button id="soundToggle" class="sound-btn" title="Toggle Sound">
+            <span class="sound-icon">🔊</span>
+        </button>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="pixel-grid"></div>
+    <div class="scan-lines"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">TECHFEST</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">HOME</a></li>
+                <li><a href="#" class="nav-link">PRIZES</a></li>
+                <li><a href="#" class="nav-link">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="glitch-text glitch" data-text="REGISTER NOW">REGISTER NOW</h1>
+            <p class="hero-subtitle">JOIN THE ULTIMATE TECH COMPETITION</p>
+            <div class="pixel-divider"></div>
+        </div>
+    </section>
+
+    <!-- Registration Form Container -->
+    <div class="form-container">
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <span class="step-number">1</span>
+                <span class="step-label">PERSONAL INFO</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <span class="step-number">2</span>
+                <span class="step-label">COMPETITIONS</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <span class="step-number">3</span>
+                <span class="step-label">TEAM INFO</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <span class="step-number">4</span>
+                <span class="step-label">ADDITIONAL</span>
+            </div>
+            <div class="progress-step" data-step="5">
+                <span class="step-number">5</span>
+                <span class="step-label">REVIEW</span>
+            </div>
+        </div>
+
+        <form id="registrationForm" class="registration-form">
+            <!-- Step 1: Personal Information -->
+            <div class="form-step active" data-step="1">
+                <h2 class="step-title">PERSONAL INFORMATION</h2>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="fullName">FULL NAME</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">EMAIL ADDRESS</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="phone">PHONE NUMBER</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="institution">COLLEGE/INSTITUTION</label>
+                        <input type="text" id="institution" name="institution" required>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Competition Selection -->
+            <div class="form-step" data-step="2">
+                <h2 class="step-title">SELECT COMPETITIONS</h2>
+                <div class="competitions-grid" id="competitionsGrid">
+                    <!-- Competitions will be populated by JavaScript -->
+                </div>
+            </div>
+            <!-- Step 5: Review & Submit -->
+            <div class="form-step" data-step="5">
+                <h2 class="step-title">REVIEW REGISTRATION</h2>
+                <div id="reviewSection" class="review-section">
+                    <!-- Review content will be populated by JavaScript -->
+                </div>
+            </div>
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <button type="button" id="prevBtn" class="btn btn-secondary">← BACK</button>
+                <button type="button" id="nextBtn" class="btn btn-primary">NEXT →</button>
+                <button type="submit" id="submitBtn" class="btn btn-submit hidden">REGISTER!</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="pixel-checkmark"></div>
+            </div>
+            <h2 class="success-title">REGISTRATION SUCCESSFUL!</h2>
+            <p class="success-message">Your registration has been submitted successfully. Check your email for confirmation.</p>
+            <button class="btn btn-primary" onclick="closeSuccessModal()">AWESOME!</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
