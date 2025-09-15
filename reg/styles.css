@@ -253,10 +253,12 @@
 
         /* --- General Section Styling --- */
         .game-section {
-            padding: 80px 20px;
+
+            
+            padding: 50px 200px;
             max-width: 1200px;
             margin: 0 auto;
-            position: relative;
+            position: auto;
             border-bottom: 4px dashed var(--pixel-blue);
         }
         .game-section:last-of-type {
@@ -368,10 +370,13 @@
 }
 /* Registration Form */
 .registration-form {
+  justify-self: center;
+  justify-content:center;
+  width: 1200px;
   background: var(--darker-bg);
   border: 2px solid var(--pixel-green);
-  padding: var(--space-32);
-  position: relative;
+  
+  
 }
 
 .form-step {
@@ -397,14 +402,20 @@
 
 .form-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--space-24);
+  grid-template-columns: repeat(2, minmax(150px,0.5fr));
+  gap: 20px;
+  padding-top: 40px;
+  padding-left: 50px;
+  padding-right: 20px;
 }
 
 .input-group {
+
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
+  padding: 20px;
+  align-content:center;
 }
 
 .input-group label {
@@ -423,6 +434,7 @@
   font-family: var(--font-family-pixel);
   font-size: 10px;
   transition: all 0.3s ease;
+  height: 20pt;
 }
 
 .input-group input:focus,
@@ -436,7 +448,7 @@
 
 .input-group textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .error-message {
@@ -566,11 +578,13 @@
 }
 
 /* Navigation Buttons */
+
 .form-navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: var(--space-32);
-  gap: var(--space-16);
+  gap: 600px;
+  
 }
 
 .btn {
@@ -583,6 +597,8 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  padding:11px;
+
 }
 
 .btn:hover {
@@ -591,16 +607,7 @@
   box-shadow: 0 0 10px var(--pixel-green);
 }
 
-.btn-primary {
-  border-color: var(--pixel-cyan);
-  color: var(--pixel-cyan);
-}
 
-.btn-primary:hover {
-  background: var(--pixel-cyan);
-  color: var(--dark-bg);
-  box-shadow: 0 0 10px var(--pixel-cyan);
-}
 
 .btn-submit {
   border-color: var(--pixel-yellow);
@@ -617,6 +624,7 @@
   0%, 100% { box-shadow: 0 0 5px var(--pixel-yellow); }
   50% { box-shadow: 0 0 20px var(--pixel-yellow), 0 0 30px var(--pixel-yellow); }
 }
+  
 
 .btn:disabled {
   opacity: 0.5;
@@ -730,10 +738,7 @@
     font-size: 24px;
   }
 
-  .sound-toggle {
-    top: var(--space-16);
-    right: var(--space-16);
-  }
+
 }
 
 /* Error state styling */
@@ -755,89 +760,4 @@ textarea.error {
   box-sizing: border-box;
 }
 
-
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-base);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-  line-height: 1.5;
-  cursor: pointer;
-  transition: all var(--duration-normal) var(--ease-standard);
-  border: none;
-  text-decoration: none;
-  position: relative;
-}
-
-.btn:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
-.btn--primary {
-  background: var(--color-primary);
-  color: var(--color-btn-primary-text);
-}
-
-.btn--primary:hover {
-  background: var(--color-primary-hover);
-}
-
-.btn--primary:active {
-  background: var(--color-primary-active);
-}
-
-.btn--secondary {
-  background: var(--color-secondary);
-  color: var(--color-text);
-}
-
-.btn--secondary:hover {
-  background: var(--color-secondary-hover);
-}
-
-.btn--secondary:active {
-  background: var(--color-secondary-active);
-}
-
-.btn--outline {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-}
-
-.btn--outline:hover {
-  background: var(--color-secondary);
-}
-
-.btn--sm {
-  padding: var(--space-4) var(--space-12);
-  font-size: var(--font-size-sm);
-  border-radius: var(--radius-sm);
-}
-
-.btn--lg {
-  padding: var(--space-10) var(--space-20);
-  font-size: var(--font-size-lg);
-  border-radius: var(--radius-md);
-}
-
-.btn--full-width {
-  width: 100%;
-}
-
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 /* Form Container */
-.form-container {
-  max-height: fit-content;
-  max-width: 800px;
-  margin: var(--space-32) auto;
-  padding: 0 var(--space-20);
-}
