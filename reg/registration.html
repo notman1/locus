@@ -36,32 +36,33 @@
         </div>
     </section>
 
-    <!-- Registration Form Container -->
-<section id="competitions" class="game-section">
-    <div class="form-container">
-        <div class="progress-bar">
-            <div class="progress-step active" data-step="1">
-                <span class="step-number">1</span>
-                <span class="step-label">PERSONAL INFO</span>
-            </div>
-            <div class="progress-step" data-step="2">
-                <span class="step-number">2</span>
-                <span class="step-label">EVENTS</span>
-            </div>
-            <div class="progress-step" data-step="5">
-                <span class="step-number">3</span>
-                <span class="step-label">REVIEW</span>
-            </div>
-        </div>
-    </section>
-        <form id="registrationForm" class="registration-form" style="height: 500px;">
+   
+        <form id="registrationForm nav-container" class="registration-form" style="height:600px;">
+             <!-- Registration Form Container -->
+    <section id="competitions" class="game-section" >
+        <div class="form-container">
+         <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                   <span class="step-number">1</span>
+                 <span class="step-label">PERSONAL INFO</span>
+             </div>
+              <div class="progress-step" data-step="2">
+                    <span class="step-number">2</span>
+                  <span class="step-label">EVENTS</span>
+               </div>
+               <div class="progress-step" data-step="3">
+                    <span class="step-number">3</span>
+                  <span class="step-label">REVIEW</span>
+              </div>
+         </div>
+     </section>
             <!-- Step 1: Personal Information -->
             <div class="form-step active" data-step="1">
-                <h2 class="step-title">PERSONAL INFORMATION</h2>
+                <h2 class=" logo" style="justify-self: center;">PERSONAL INFORMATION</h2>
                 <div class="form-grid">
                     <div class="input-group">
                         <label for="fullName">FULL NAME</label>
-                        <input type="text" id="fullName" name="fullName" required>
+                        <input type="text" id="fullName" name="fullName" required >
                         <div class="error-message"></div>
                     </div>
                     <div class="input-group">
@@ -92,7 +93,7 @@
                 </div>
             </div>
             <!-- Step 3: Review & Submit -->
-            <div class="form-step" data-step="5">
+            <div class="form-step" data-step="3">
                 <h2 class="step-title">REVIEW REGISTRATION</h2>
                 <div id="reviewSection" class="review-section">
                     <!-- Review content will be populated by JavaScript -->
