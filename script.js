@@ -195,8 +195,8 @@ document.querySelectorAll('.game-card').forEach(card => {
     // ENTER button (show details + redirect or just details)
     card.querySelector('.pixel-button').addEventListener('click', (e) => {
         e.preventDefault();
-        eventTitle.innerText = "Register: " + title;
-        eventDescription.innerText = "You are about to enter " + title + ".\n\n" + description;
+        eventTitle.innerText = "\nConstructing the next level\n";
+        eventDescription.innerText = "\nCome back soon for more action\n\n\n";
         eventModal.style.display = 'flex';
         // Optionally redirect after confirmation
     });
@@ -212,3 +212,4 @@ window.addEventListener('click', (e) => {
         eventModal.style.display = 'none';
     }
 });
+
