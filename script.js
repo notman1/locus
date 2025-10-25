@@ -213,3 +213,42 @@ window.addEventListener('click', (e) => {
     }
 });
 
+// Wait for the document to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. Select all the necessary elements ---
+    const hamburgerIcon = document.querySelector('.fa-bars');
+    const closeIcon = document.querySelector('.material-symbols-outlined');
+    const submenu = document.querySelector('.nav-submenu');
+    
+    // We don't need the parent elements anymore
+
+
+    // --- 2. Add a click event listener to the hamburger ICON ---
+    hamburgerIcon.addEventListener('click', () => {
+        // Show the submenu
+        submenu.style.left = '0px';
+        submenu.style.opacity = '1';
+
+        // Hide the hamburger ICON
+        hamburgerIcon.style.display = 'none';
+        
+        // Show the close ICON
+        closeIcon.style.display = 'block';
+    });
+
+
+    // --- 3. Add a click event listener to the close ICON ---
+    closeIcon.addEventListener('click', () => {
+        // Hide the submenu
+        submenu.style.left = '1000px';
+        submenu.style.opacity = '0';
+
+        // Show the hamburger ICON again
+        hamburgerIcon.style.display = 'block';
+
+        // Hide the close ICON
+        closeIcon.style.display = 'none';
+    });
+});
+
