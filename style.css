@@ -1,6 +1,5 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 /* CSS Variables for our 8-bit color palette */
 :root {
     --pixel-green: #00ff00;
@@ -30,7 +29,7 @@ body {
     font-family: 'Press Start 2P', monospace;
     background-color: var(--dark-bg);
     color: var(--pixel-white);
-    line-height: 1.8;
+    line-height: 2;
     /* Force nearest-neighbor scaling for a crisp pixel look */
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
@@ -201,6 +200,49 @@ nav {
     right: 0;
     animation: blink 0.8s infinite;
 }
+/*submenu*/
+.nav-submenu {
+    position: absolute; /* better than absolute for fullscreen overlays */
+    top: 0;
+    left: 2000px;
+    width: 100vw;
+    height: 100vh;
+    background: var(--darker-bg);
+    display: flex;              /* enable flexbox */
+    justify-content: center;    /* center horizontally */
+    align-items: center;
+    transition: 1s all ease;
+    opacity: 0.5;
+}
+.nav-submenu-links {
+    display: flex;
+    flex-direction: column; /* stack links vertically */             /* space between links */
+    text-align: center;
+}
+.nav-submenu li{
+    list-style: none;
+    padding: 15px;
+    cursor: pointer;
+    width: 100vw;
+    margin: 5px;
+    transition: 0.3s all ease;
+}
+.nav-submenu .logo{
+    font-size: 20px;
+    padding: 10px;
+}
+.nav-submenu a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+.nav-submenu li:hover{
+    background: var(--dark-bg);
+}
+.nav-submenu li:hover a {
+    color: var(--pixel-yellow);
+}
+
 
 /* --- Hero Section --- */
 .hero {
@@ -236,7 +278,7 @@ line-height: 1.2;
     font-size: 10px;
     margin-bottom: 10px;
     color: var(--pixel-green);
-    animation: blink 2s infinite;
+    animation: blink 4s infinite;
 }
 
 .game-description {
@@ -320,6 +362,7 @@ line-height: 1.2;
     padding: 25px;
     transition: all 0.3s ease;
     position: relative;
+    margin: 0 auto;
 }
 .game-card li{
     display: none;
@@ -576,14 +619,61 @@ footer {
 #change-disc-style li{
     list-style: disc;
 }
-
+.nav-menu-main{
+    display: none;
+}
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
+    .nav-links li :not(.nav-menu i,.nav-menu .material-symbols-outlined){display: none;}
+    /*.nav-links .nav-menu i ,.nav-menu .material-symbols-outlined{top:10px}
+    .nav-submenu{left: 0px;opacity: 1;} */
     .game-title { font-size: 24px; }
     .section-title { font-size: 20px; }
     .game-grid { grid-template-columns: 1fr; }
     .countdown-timer { gap: 10px; }
     .time-box { min-width: 70px; padding: 10px; }
     .time-box .time-number { font-size: 24px; }
+    .game-section{max-width: 380px;}
+    .nav-menu-main{display: block;}
+    .game-card{width: 350px;}
+}
+.nav-menu i , .nav-menu span{
+    font-size: 22px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    transform: translate(50%,30%);
+    right: 40px;
+    cursor: pointer;
+    z-index: 99;
+}
+.nav-menu span{
+    display: none;
+}
+@media (max-width:1270px){
+    body{font-size: 11px;}
+    .game-section{max-width: 780px;}
+    .time-box{padding: 7px;}
+    .time-box .time-number{font-size: 22px;}
+    .countdown-timer{gap: 8px;}
+    .time-box .time-label{font-size: 10px;}
+    .countdown-container .start-button{padding: 10px;}
+}
+
+@media (max-width:400px){
+    .stat-box{padding: 10px;margin: 0px 15px;}
+    #about{padding: 50px 20px;}
+    .game-title{font-size: 22px;}
+    .subtitle{font-size: 8px;}
+    .stat-number{font-size: 18px;}
+    .countdown-title{font-size: 12px;margin-bottom: 20px;}
+    .time-box .time-label{font-size: 8px;}
+    .time-box .time-number{font-size: 18px;}
+    .time-box{width: 74px;}
+    .start-button{padding: 15px 20px;}
+    .game-card{width: 300px;padding: 15px;}
+    .game-card h5{font-size: 8.5px;}
+    .game-card-buttons a{padding: 8px 15px;}
+    .game-card h3{font-size: 13px;}
+    .section-title{font-size: 16px;}
 }
