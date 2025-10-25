@@ -672,8 +672,9 @@ footer {
     .time-box{width: 74px;}
     .start-button{padding: 15px 20px;}
     .game-card{width: 300px;padding: 15px;}
-    .game-card h5{font-size: 8.5px;}
+    .game-card h5{font-size: 8px;}
     .game-card-buttons a{padding: 8px 15px;}
     .game-card h3{font-size: 13px;}
     .section-title{font-size: 16px;}
 }
+
