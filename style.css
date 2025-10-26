@@ -673,11 +673,12 @@ footer {
     .konami-content #event-date{font-size: 12px;}
     .konami-content #event-rules,#event-reg-fees,#event-match,#event-prize{font-size: 10px;margin-bottom: 5px;}
     .konami-content #event-rules-desc, #event-match-desc,#event-prize-desc{font-size: 9px;}
-    .konami-content{padding: 15px;width: 90%;}
+    .konami-content{padding: 20px;width: 90%;}
     #event-rules-desc li, #event-match-desc li, #event-prize-desc li{margin: 0px 20px 0px 40px;}
     .konami-content .reg-fees{font-size: 16px;}
 }
 .konami-content #event-description{margin-bottom: 5px;}
+
 
 @media (max-width:520px){
     .konami-content p{margin-bottom: 5px;}
@@ -709,7 +710,7 @@ footer {
     .game-grid{gap:15px}
 }
 @media (max-width:380px){
-    .konami-content{width: 80%;}
+    .konami-content{width: 85%;padding: 22px}
     .konami-content #event-title{font-size: 11px;margin-bottom: 0px;}
     .konami-content #event-date{font-size: 8px;}
     .konami-content #event-rules,#event-reg-fees,#event-match,#event-prize{font-size: 8px;margin-bottom: 5px;}
@@ -717,7 +718,6 @@ footer {
     .konami-content .reg-fees{font-size: 12px;}
     #event-rules-desc li, #event-match-desc li, #event-prize-desc li{margin: 0px 5px 0px 10px;}
     .konami-content .pixel-button{padding: 5px 10px;}
-
     .countdown-timer{gap: 2px;}
     .time-box .time-label{font-size: 6px;}
     .time-box{width: 58px;padding: 5px;}
@@ -726,4 +726,3 @@ footer {
     .game-section{padding: 10px 10px;}
     .section-title{margin: 30px 0px;font-size: 16px;}
 }
-
