@@ -678,6 +678,18 @@ footer {
     .konami-content .reg-fees{font-size: 16px;}
 }
 .konami-content #event-description{margin-bottom: 5px;}
+
+@media (max-width:520px){
+    .konami-content p{margin-bottom: 5px;}
+    .konami-content #event-title{font-size: 12px;margin-bottom: 0px;}
+    .konami-content #event-date{font-size: 9px;}
+    .konami-content #event-rules,#event-reg-fees,#event-match,#event-prize{font-size: 9px;margin-bottom: 5px;}
+    .konami-content #event-rules-desc, #event-match-desc,#event-prize-desc{font-size: 8px;}
+    .konami-content #event-description{margin-bottom: 0px;}
+    #event-rules-desc li, #event-match-desc li, #event-prize-desc li{margin: 0px 10px 0px 20px;}
+    .konami-content .reg-fees{font-size: 14px;}
+    .konami-content .pixel-button{padding: 8px 15px;}
+}
 @media (max-width:400px){
     .stat-box{padding: 10px;margin: 0px 15px;}
     #about{padding: 50px 20px;}
@@ -694,18 +706,7 @@ footer {
     .game-card-buttons a{padding: 8px 15px;}
     .game-card h3{font-size: 13px;}
     .section-title{font-size: 16px;}
-}
-
-@media (max-width:520px){
-    .konami-content p{margin-bottom: 5px;}
-    .konami-content #event-title{font-size: 12px;margin-bottom: 0px;}
-    .konami-content #event-date{font-size: 9px;}
-    .konami-content #event-rules,#event-reg-fees,#event-match,#event-prize{font-size: 9px;margin-bottom: 5px;}
-    .konami-content #event-rules-desc, #event-match-desc,#event-prize-desc{font-size: 8px;}
-    .konami-content #event-description{margin-bottom: 0px;}
-    #event-rules-desc li, #event-match-desc li, #event-prize-desc li{margin: 0px 10px 0px 20px;}
-    .konami-content .reg-fees{font-size: 14px;}
-    .konami-content .pixel-button{padding: 8px 15px;}
+    .game-grid{gap:15px}
 }
 @media (max-width:380px){
     .konami-content{width: 80%;}
@@ -725,3 +726,4 @@ footer {
     .game-section{padding: 10px 10px;}
     .section-title{margin: 30px 0px;font-size: 16px;}
 }
+
