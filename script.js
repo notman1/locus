@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Sound Engine using Tone.js ---
@@ -73,6 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
         terminalObserver.observe(terminalOutput);
     }
 
+    const muteBtn = document.getElementById('mute-btn');
+    if(muteBtn) {
+        muteBtn.addEventListener('click', () => {
+            if (synth.volume.value === -Infinity) {
+                synth.volume.value = 0;
+                muteBtn.innerHTML = '<i class="fa fa-volume-up"></i>';
+            } else {
+                synth.volume.value = -Infinity;
+                muteBtn.innerHTML = '<i class="fa fa-volume-off"></i>';
+            }
+        });
+    }
+
     // --- Konami Code Easter Egg ---
     const konamiModal = document.getElementById('konami-modal');
     const closeKonamiBtn = document.getElementById('close-konami');
@@ -93,9 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    closeKonamiBtn.addEventListener('click', () => {
-        konamiModal.style.display = 'none';
-    });
+    if(closeKonamiBtn) {
+        closeKonamiBtn.addEventListener('click', () => {
+            konamiModal.style.display = 'none';
+        });
+    }
+
 
     // --- Active Nav Link on Scroll ---
     const sections = document.querySelectorAll('.game-section');
@@ -130,125 +145,135 @@ document.addEventListener('DOMContentLoaded', () => {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("days").innerText = String(days).padStart(2, '0');
-        document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-        document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-        document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+
+        if(daysEl) {
+            daysEl.innerText = String(days).padStart(2, '0');
+        }
+        if(hoursEl) {
+            hoursEl.innerText = String(hours).padStart(2, '0');
+        }
+        if(minutesEl) {
+            minutesEl.innerText = String(minutes).padStart(2, '0');
+        }
+        if(secondsEl) {
+            secondsEl.innerText = String(seconds).padStart(2, '0');
+        }
+
 
         if (distance < 0) {
             clearInterval(countdownFunction);
-            document.getElementById("countdown").innerHTML = "<div class='glitch' data-text='EVENT IS LIVE!'>EVENT IS LIVE!</div>";
+            const countdownEl = document.getElementById("countdown");
+            if(countdownEl) {
+                countdownEl.innerHTML = "<div class='glitch' data-text='EVENT IS LIVE!'>EVENT IS LIVE!</div>";
+            }
         }
     }, 1000);
 
     // --- Registered Users Counter ---
     let userCount = 1337;
     const userCountElement = document.getElementById("registered-users");
-    setInterval(function () {
-        userCount += Math.floor(Math.random() * 3) + 1;
-        userCountElement.innerText = userCount;
-    }, 2500); // Update every 2.5 seconds
-
-});
-// --- Event Modal ---
-const closeEventBtn = document.getElementById('close-event');
-const eventModal = document.getElementById('event-modal');
-const eventTitle = document.getElementById('event-title');
-const eventDescription = document.getElementById('event-description');
-const eventDate = document.getElementById('event-date');
-const eventRules= document.getElementById('event-rules');
-const eventRulesDesc = document.getElementById('event-rules-desc');
-const eventMatch = document.getElementById('event-match');
-const eventMatchDesc = document.getElementById('event-match-desc');
-const eventPrize = document.getElementById('event-prize');
-const eventPrizeDesc = document.getElementById('event-prize-desc');
-const eventRegFees = document.getElementById('event-reg-fees')
-// Attach event listeners to buttons
-// Attach event listeners to buttons
-document.querySelectorAll('.game-card').forEach(card => {
-    const title = card.querySelector('h3').innerText;
-    const description = card.querySelector('#main-p').innerText;
-    const date = card.querySelector('#main-date').innerText;
-    const mainRules1 = card.querySelector('#main-rules1').innerText;
-    const mainRulesData1= card.querySelector('#main-rules-data1').innerHTML; // <-- changed
-    const mainRules2 = card.querySelector('#main-rules2').innerText;
-    const mainRulesData2 = card.querySelector('#main-rules-data2').innerHTML; // <-- changed
-    const mainRules3 = card.querySelector('#main-rules3').innerText;
-    const mainRulesData3 = card.querySelector('#main-rules-data3').innerHTML; // <-- changed
-    const mainRules4 = card.querySelector('#main-rules-data4').innerHTML;
-    // PREVIEW button
-    card.querySelector('.pixel-button-preview').addEventListener('click', (e) => {
-        e.preventDefault();
-        eventTitle.innerText = title+" - "+description;
-        eventDate.innerText = date;
-        eventRules.innerText = mainRules1;
-        eventRulesDesc.innerHTML = mainRulesData1; // <-- changed
-        eventMatch.innerText = mainRules2;
-        eventMatchDesc.innerHTML = mainRulesData2; // <-- changed
-        eventPrize.innerText = mainRules3;
-        eventPrizeDesc.innerHTML = mainRulesData3; // <-- changed
-        eventRegFees.innerHTML=mainRules4;
-        eventModal.style.display = 'flex';
-        document.body.style.overflow="hidden";
-    });
-
-    // ENTER button (show details + redirect or just details)
-    card.querySelector('.pixel-button').addEventListener('click', (e) => {
-        e.preventDefault();
-        eventTitle.innerText = "\nConstructing the next level\n";
-        eventDescription.innerText = "\nCome back soon for more action\n\n\n";
-        eventModal.style.display = 'flex';
-        // Optionally redirect after confirmation
-    });
-});
-function closeEventBtnHere() {
-    document.body.style.overflow="auto";
-    eventModal.style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', (e) => {
-    if (e.target === eventModal) {
-        eventModal.style.display = 'none';
+    if(userCountElement) {
+        setInterval(function () {
+            userCount += Math.floor(Math.random() * 3) + 1;
+            userCountElement.innerText = userCount;
+        }, 2500); // Update every 2.5 seconds
     }
-});
 
-// Wait for the document to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Select all the necessary elements ---
+    // --- Event Modal ---
+    const eventModal = document.getElementById('event-modal');
+    if(eventModal) {
+        const eventTitle = document.getElementById('event-title');
+        const eventDescription = document.getElementById('event-description');
+        const eventDate = document.getElementById('event-date');
+        const eventRules= document.getElementById('event-rules');
+        const eventRulesDesc = document.getElementById('event-rules-desc');
+        const eventMatch = document.getElementById('event-match');
+        const eventMatchDesc = document.getElementById('event-match-desc');
+        const eventPrize = document.getElementById('event-prize');
+        const eventPrizeDesc = document.getElementById('event-prize-desc');
+        const eventRegFees = document.getElementById('event-reg-fees');
+
+        document.querySelectorAll('.game-card').forEach(card => {
+            const title = card.querySelector('h3').innerText;
+            const description = card.querySelector('#main-p').innerText;
+            const date = card.querySelector('#main-date').innerText;
+            const mainRules1 = card.querySelector('#main-rules1').innerText;
+            const mainRulesData1= card.querySelector('#main-rules-data1').innerHTML;
+            const mainRules2 = card.querySelector('#main-rules2').innerText;
+            const mainRulesData2 = card.querySelector('#main-rules-data2').innerHTML;
+            const mainRules3 = card.querySelector('#main-rules3').innerText;
+            const mainRulesData3 = card.querySelector('#main-rules-data3').innerHTML;
+            const mainRules4 = card.querySelector('#main-rules-data4').innerHTML;
+
+            const previewButton = card.querySelector('.pixel-button-preview');
+            if(previewButton) {
+                previewButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    eventTitle.innerText = title+" - "+description;
+                    eventDate.innerText = date;
+                    eventRules.innerText = mainRules1;
+                    eventRulesDesc.innerHTML = mainRulesData1;
+                    eventMatch.innerText = mainRules2;
+                    eventMatchDesc.innerHTML = mainRulesData2;
+                    eventPrize.innerText = mainRules3;
+                    eventPrizeDesc.innerHTML = mainRulesData3;
+                    eventRegFees.innerHTML=mainRules4;
+                    eventModal.style.display = 'flex';
+                    document.body.style.overflow="hidden";
+                });
+            }
+
+
+            const enterButton = card.querySelector('.pixel-button');
+            if(enterButton) {
+                enterButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = '/reg/registration.html';
+                });
+            }
+        });
+
+        const closeEventBtn = document.getElementById('close-event');
+        if(closeEventBtn) {
+            closeEventBtn.addEventListener('click', () => {
+                document.body.style.overflow="auto";
+                eventModal.style.display = 'none';
+            });
+        }
+
+
+        window.addEventListener('click', (e) => {
+            if (e.target === eventModal) {
+                eventModal.style.display = 'none';
+            }
+        });
+    }
+
+
+    // --- Responsive Navigation ---
     const hamburgerIcon = document.querySelector('.fa-bars');
     const closeIcon = document.querySelector('.material-symbols-outlined');
     const submenu = document.querySelector('.nav-submenu');
-    
-    // We don't need the parent elements anymore
 
+    if(hamburgerIcon && closeIcon && submenu) {
+        hamburgerIcon.addEventListener('click', () => {
+            submenu.style.left = '0px';
+            submenu.style.opacity = '1';
+            hamburgerIcon.style.display = 'none';
+            closeIcon.style.display = 'block';
+        });
 
-    // --- 2. Add a click event listener to the hamburger ICON ---
-    hamburgerIcon.addEventListener('click', () => {
-        // Show the submenu
-        submenu.style.left = '0px';
-        submenu.style.opacity = '1';
-
-        // Hide the hamburger ICON
-        hamburgerIcon.style.display = 'none';
-        
-        // Show the close ICON
-        closeIcon.style.display = 'block';
-    });
-
-
-    // --- 3. Add a click event listener to the close ICON ---
-    closeIcon.addEventListener('click', () => {
-        // Hide the submenu
-        submenu.style.left = '1000px';
-        submenu.style.opacity = '0';
-
-        // Show the hamburger ICON again
-        hamburgerIcon.style.display = 'block';
-
-        // Hide the close ICON
-        closeIcon.style.display = 'none';
-    });
+        closeIcon.addEventListener('click', () => {
+            submenu.style.left = '1000px';
+            submenu.style.opacity = '0';
+            hamburgerIcon.style.display = 'block';
+            closeIcon.style.display = 'none';
+        });
+    }
 });
 
