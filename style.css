@@ -676,6 +676,13 @@ footer {
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
     .nav-links li :not(.nav-menu i,.nav-menu .material-symbols-outlined){display: none;}
+    .nav-menu i , .nav-menu span{
+        right: 80px;
+    }
+    .mute-btn {
+        position: absolute;
+        right: 20px;
+    }
     /*.nav-links .nav-menu i ,.nav-menu .material-symbols-outlined{top:10px}
     .nav-submenu{left: 0px;opacity: 1;} */
     .game-title { font-size: 24px; }
