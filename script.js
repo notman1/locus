@@ -834,7 +834,7 @@ const countdownFunction = setInterval(function () {
             if(enterButton) {
                 enterButton.addEventListener('click', (e) => {
                     e.preventDefault();
-                    window.location.href = '/reg/registration.html';
+                    window.location.href = '/reg/reg.html';
                 });
             }
         });
@@ -862,6 +862,7 @@ const countdownFunction = setInterval(function () {
             }
         });
     }
+
 
 
 }); // End DOMContentLoaded
