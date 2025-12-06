@@ -3,20 +3,42 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOCUS QUEST - 8-BIT HYPERDRIVE</title>
-    <!-- Use the classic 8-bit font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css" type="text/css">
-    <script src="/script.js" defer></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close" />
 
-    <!-- Three.js Library for 3D Graphics -->
+    <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="/script.js" defer></script>
 </head>
 
-<body>
-    <!-- Three.js 3D Background Canvas -->
+<body class="no-scroll">
+    <!-- Loader Overlay -->
+    <div id="loader-container">
+        <svg id="loader-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <clipPath id="circle-clip">
+                    <circle cx="50" cy="50" r="2.5" />
+                </clipPath>
+                <mask id="reveal-mask" maskUnits="userSpaceOnUse">
+                    <rect width="100%" height="100%" fill="white" />
+                    <circle id="reveal-circle" cx="50" cy="50" r="0" fill="black" />
+                </mask>
+            </defs>
+            <rect id="loader-bg" width="100%" height="100%" fill="#12121f" mask="url(#reveal-mask)" />
+            <g id="loader-content">
+                <rect id="fill-rect" x="0" y="55" width="100" height="100" fill="#00ff00"
+                    clip-path="url(#circle-clip)" />
+                <circle id="loader-circle-stroke" cx="50" cy="50" r="2.5" stroke="#00ff00" stroke-width="0.5"
+                    fill="none" />
+            </g>
+        </svg>
+    </div>
     <canvas id="bg-canvas"></canvas>
 
     <!-- Navigation -->
@@ -30,17 +52,15 @@
                 <li><a href="#contact">CONTACT US</a></li>
                 <div class="nav-menu-main">
                     <li class="nav-menu"><i class="fa fa-bars" onclick="faBars()"></i></li>
-                    <li class="nav-menu"><span onclick="materialSymbolsOutlines()" class="material-symbols-outlined" style="font-size: 26px;font-weight: 800;">
-                        close
-                        </span></li>
+                    <li class="nav-menu"><span onclick="materialSymbolsOutlines()" class="material-symbols-outlined"
+                            style="font-size: 26px;font-weight: 800;">close</span></li>
                 </div>
             </ul>
             <button class="mute-btn" id="mute-btn">
                 <i class="fa fa-volume-up"></i>
             </button>
         </div>
-            <!--Submenu-->
-    <div class="nav-submenu">
+        <div class="nav-submenu">
             <ul class="nav-submenu-links">
                 <div class="logo">LOCUS</div>
                 <li><a href="#home">HOME</a></li>
@@ -48,7 +68,7 @@
                 <li><a href="#find-us">FIND US</a></li>
                 <li><a href="#contact">CONTACT US</a></li>
             </ul>
-    </div>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -95,7 +115,7 @@
             </div>
         </div>
     </section>
-    
+
     <!--Using this. Enter for the entering into the registration and preview for the preview of the rules and stuffs-->
     <!-- Competitions Section -->
     <section id="competitions" class="game-section">
@@ -104,99 +124,121 @@
             <!--Poster designing-->
             <div class="game-card">
                 <h3>ByteSketch</h3>
-                <h5>Unleash your creativity and let your pixels do the talking! Design a visually stunning poster that
+                <h5>Unleash your creativity and let your pixels do the talking! Design a visually
+                    stunning poster that
                     captures the theme and win big.</h5>
-            
+
                 <p id="main-p" class="main-p">Poster Making Competition</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>The total duration for the competition is 1 hour.</li>
-                    <li>Internet is allowed only for the first 10 minutes to download assets (images, fonts, etc.).</li>
-                    <li>The theme will be announced only after the initial 10-minute download period ends.</li>
-                    <li>All designs must be original. Plagiarism or use of AI tools will lead to disqualification.</li>
-                    <li>Posters will be judged on creativity, theme relevance, design aesthetics, and clarity.</li>
+                    <li>Internet is allowed only for the first 10 minutes to download assets (images,
+                        fonts, etc.).</li>
+                    <li>The theme will be announced only after the initial 10-minute download period
+                        ends.</li>
+                    <li>All designs must be original. Plagiarism or use of AI tools will lead to
+                        disqualification.</li>
+                    <li>Posters will be judged on creativity, theme relevance, design aesthetics, and
+                        clarity.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Software & Submission : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Guidelines</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
-                            <li><b>Software:</b> Participants must use only Canva or Adobe Photoshop.</li>
-                            <li><b>Submission:</b> The final poster must be exported in .PNG or .JPG format.</li>
-                            <li><b>File Name:</b> Please use the format: ParticipantName_ByteSketch.</li>
+                            <li><b>Software:</b> Participants must use only Canva or Adobe Photoshop.
+                            </li>
+                            <li><b>Submission:</b> The final poster must be exported in .PNG or .JPG
+                                format.</li>
+                            <li><b>File Name:</b> Please use the format: ParticipantName_ByteSketch.
+                            </li>
                             <li>Late entries will not be considered.</li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs : 1500</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs : 1000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs
+                            : 1500</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs
+                            : 1000</b></li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b> per person
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
-                    <a href="/reg/registration.html" class="pixel-button">ENTER</a>
+                    <a href="/reg/reg.html" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
                 </div>
             </div>
             <!--Project Expo-->
             <div class="game-card">
                 <h3>Neotech Expo</h3>
-            
-                <h5>Showcase your innovative projects at Neotech Expo. Compete with top minds, win exciting prizes, and win the premier exhibition.</h5>
-            
+
+                <h5>Showcase your innovative projects at Neotech Expo. Compete with top minds, win
+                    exciting prizes, and
+                    win the premier exhibition.</h5>
+
                 <p id="main-p" class="main-p">Project Expo Competition</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>Teams can consist of 1 to 3 members.</li>
-                    <li>All projects must be original and innovative. Plagiarized work will be disqualified.</li>
-                    <li>Participants must bring all materials needed for their project display (e.g., posters, models, laptops).</li>
-                    <li>Projects must be safe for public display; any hazardous projects will be disqualified.</li>
+                    <li>All projects must be original and innovative. Plagiarized work will be
+                        disqualified.</li>
+                    <li>Participants must bring all materials needed for their project display (e.g.,
+                        posters, models,
+                        laptops).</li>
+                    <li>Projects must be safe for public display; any hazardous projects will be
+                        disqualified.</li>
                     <li>A dedicated setup time will be provided before the event begins.</li>
-                    <li>Projects will be judged on originality, technical knowledge, practical application, and presentation.</li>
+                    <li>Projects will be judged on originality, technical knowledge, practical
+                        application, and
+                        presentation.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Presentation Format : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Judging Round</span>
                         <ul style="list-style-type: disc;">
-                            <li>Each team will have 5-10 minutes to present their project to the judges, followed by a short Q&A session.</li>
+                            <li>Each team will have 5-10 minutes to present their project to the judges,
+                                followed by a
+                                short Q&A session.</li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs : 2000</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs : 1000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs
+                            : 2000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs
+                            : 1000</b></li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b> per team
                 </p>
 
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -205,46 +247,55 @@
             <!--App Logo-->
             <div class="game-card">
                 <h3>CRE8-LOGO</h3>
-            
-                <h5>Show your creativity by designing unique app logos. Compete for top positions, recognition, and
+
+                <h5>Show your creativity by designing unique app logos. Compete for top positions,
+                    recognition, and
                     exciting prizes!</h5>
                 <p id="main-p" class="main-p">Logo Design Competition</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>The competition duration is one and a half hours (1.5 hrs).</li>
-                    <li>Designs must be created exclusively on a Linux-based OS (Inkscape is recommended).</li>
+                    <li>Designs must be created exclusively on a Linux-based OS (Inkscape is
+                        recommended).</li>
                     <li>The theme will be revealed only at the beginning of the event.</li>
                     <li>All submitted work must be the participant's original creation.</li>
                     <li>The final submission must be in both SVG and high-resolution PNG formats.</li>
                     <li>The decision of the judges will be final and binding.</li>
-                    <li>Designs will be judged on creativity, originality, theme relevance, and visual appeal.</li>
+                    <li>Designs will be judged on creativity, originality, theme relevance, and visual
+                        appeal.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">The Challenge : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Task</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
-                            <li>Design a unique and innovative logo for a fictional application based on the given theme, capturing its function and target audience.</li>
+                            <li>Design a unique and innovative logo for a fictional application based on
+                                the given
+                                theme, capturing its function and target audience.</li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>1500/-</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1000/-</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>1500/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1000/-</b>
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b>
                 </p>
 
-               
-            
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -253,51 +304,60 @@
             <!--Web Wizard-->
             <div class="game-card">
                 <h3>WEB WIZARD</h3>
-            
-                <h5>Participate in our frontend web designing competition. Create stunning, responsive websites using
+
+                <h5>Participate in our frontend web designing competition. Create stunning, responsive
+                    websites using
                     only HTML, CSS, and creativity!</h5>
                 <p id="main-p" class="main-p">Web Designing</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
-                    <li>Participation is open to individuals. All participants must register before the deadline.</li>
+                    <li>Participation is open to individuals. All participants must register before the
+                        deadline.</li>
                     <li>No external help or external electronic devices are allowed in the venue.</li>
                     <li>Participants must complete their work within the given time limit.</li>
                     <li>Any unethical or offensive content will not be tolerated.</li>
                     <li>Judging will be based on design, functionality, and theme relevance.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Competition Format : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Guidelines</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
-                            <li><b>Theme:</b> The theme will be announced at the start of the event.</li>
+                            <li><b>Theme:</b> The theme will be announced at the start of the event.
+                            </li>
                             <li><b>Time Limit:</b> Participants will have 1 hour and 30 minutes.</li>
                             <li><b>Tools Allowed:</b> HTML, CSS, and JAVASCRIPT.</li>
-                            <li><b>Content:</b> Websites must be built from scratch; pre-written code is not allowed.</li>
+                            <li><b>Content:</b> Websites must be built from scratch; pre-written code is
+                                not allowed.
+                            </li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>2500/-</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1000/-</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2500/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1000/-</b>
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b> per person
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -306,30 +366,35 @@
             <!--Seminar Comp-->
             <div class="game-card">
                 <h3>Insight Summit</h3>
-            
-                <h5>Prove your expertise and deliver a compelling technical seminar with clarity and confidence to win this
+
+                <h5>Prove your expertise and deliver a compelling technical seminar with clarity and
+                    confidence to win
+                    this
                     battle of intellect.</h5>
                 <p id="main-p" class="main-p">Seminar Presentation</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
-                    <li>Each presentation has a duration of 10 minutes, followed by a 3-minute Q&A session.</li>
+                    <li>Each presentation has a duration of 10 minutes, followed by a 3-minute Q&A
+                        session.</li>
                     <li>Participants must register via the official site or on-site.</li>
                     <li>An abstract of the presentation must be submitted before the event.</li>
-                    <li>All work must be original, and proper citations are required for referenced material.</li>
+                    <li>All work must be original, and proper citations are required for referenced
+                        material.</li>
                     <li>Plagiarism or offensive content will lead to immediate disqualification.</li>
                     <li>The decisions of the judges are final.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Presentation & Equipment : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Presentation Format</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li>Recommended 10–12 slides, presented in English.</li>
-                            <li>Slides must have clear fonts, readable visuals, and a structured flow.</li>
+                            <li>Slides must have clear fonts, readable visuals, and a structured flow.
+                            </li>
                             <li>The presentation topic will be announced soon.</li>
                         </ul>
                     </li>
@@ -341,23 +406,25 @@
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes & Evaluation : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs : 2000</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs : 1000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs
+                            : 2000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs
+                            : 1000</b></li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b> per entry
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -366,50 +433,59 @@
             <!--Typing competition-->
             <div class="game-card">
                 <h3>KEY STORM</h3>
-            
-                <h5>Test your typing speed and accuracy. Compete for first and second place. Fastest, most accurate
+
+                <h5>Test your typing speed and accuracy. Compete for first and second place. Fastest,
+                    most accurate
                     typist wins. Register now!</h5>
-            
+
                 <p id="main-p" class="main-p">Typing Competition</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>Participants must type the words or sentences displayed on the screen.</li>
                     <li>Each participant gets a fixed duration of 1.5 minutes for the test.</li>
                     <li>Registration can be done in advance or on the spot.</li>
-                    <li>Any form of cheating (e.g., copy-paste) will lead to immediate disqualification.</li>
+                    <li>Any form of cheating (e.g., copy-paste) will lead to immediate disqualification.
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Test Format & Evaluation : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Evaluation Criteria</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li><b>Speed:</b> Measured in Words Per Minute (WPM).</li>
-                            <li><b>Accuracy:</b> Measured as a percentage of correctly typed characters.</li>
-                            <li><b>Tie-Breaker:</b> If WPM scores are tied, the participant with higher accuracy wins.</li>
+                            <li><b>Accuracy:</b> Measured as a percentage of correctly typed characters.
+                            </li>
+                            <li><b>Tie-Breaker:</b> If WPM scores are tied, the participant with higher
+                                accuracy wins.
+                            </li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>3000/-</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>2000/-</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>3000/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>2000/-</b>
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">30/-</b> per person
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -418,35 +494,42 @@
             <!--Code Debugging-->
             <div class="game-card">
                 <h3>CodeQuest</h3>
-            
 
-                <h5>Join our two-phase coding competition: reverse engineer outputs, debug faulty code, test your skills,
+
+                <h5>Join our two-phase coding competition: reverse engineer outputs, debug faulty code,
+                    test your
+                    skills,
                     and compete for exciting prizes!</h5>
                 <p id="main-p" class="main-p">Coding & Debugging Challenge</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>The total duration of the competition is up to 2 hours (120 minutes).</li>
                     <li>Participants must use the laptops or PCs provided by the college.</li>
                     <li>Participants must register online or on-site before the event begins.</li>
                     <li>Allowed languages for the coding phase are Java, C, C++, and Python.</li>
-                    <li>Judging is based on correctness, code efficiency, debugging skill, and code quality.</li>
+                    <li>Judging is based on correctness, code efficiency, debugging skill, and code
+                        quality.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Event Phases : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
-                        <span style="font-weight:bold; color:#ffff00;">Phase 1: Coding Challenge (1 hour)</span>
+                        <span style="font-weight:bold; color:#ffff00;">Phase 1: Coding Challenge (1
+                            hour)</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li>Competitors will be given output-based problems.</li>
-                            <li>Your task is to deduce the logic or pattern and write the code to produce the given output.</li>
+                            <li>Your task is to deduce the logic or pattern and write the code to
+                                produce the given
+                                output.</li>
                             <li>Points are awarded based on correctness and efficiency.</li>
                         </ul>
                     </li>
                     <li>
-                        <span style="font-weight:bold; color:#ffff00;">Phase 2: Debugging (1 hour)</span>
+                        <span style="font-weight:bold; color:#ffff00;">Phase 2: Debugging (1
+                            hour)</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li>Only winners from Phase 1 will proceed to this round.</li>
                             <li>Participants will be given pre-written C programs with errors.</li>
@@ -454,23 +537,27 @@
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>2500/-</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1500/-</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2500/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1500/-</b>
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b> per person
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -479,33 +566,37 @@
             <!--Quiz-->
             <div class="game-card">
                 <h3>QUIZTRIX</h3>
-            
-                <h5>Participate in our written quiz competition. Test your knowledge on paper, answer accurately, and
+
+                <h5>Participate in our written quiz competition. Test your knowledge on paper, answer
+                    accurately, and
                     compete for top positions and prizes!</h5>
-            
+
                 <p id="main-p" class="main-p">Quiz Competition</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>Each team must consist of 2 to 3 members.</li>
                     <li>The quiz consists of two rounds: Written Multiple Choice and Rapid Fire.</li>
                     <li>Each correct answer earns 1 point. There is no negative marking.</li>
-                    <li>Any team found engaging in unfair practices will be disqualified immediately.</li>
+                    <li>Any team found engaging in unfair practices will be disqualified immediately.
+                    </li>
                     <li>The decision of the quizmaster will be final and binding in all matters.</li>
                     <li>Teams are encouraged to maintain a spirit of healthy competition.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Competition Format : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
-                        <span style="font-weight:bold; color:#ffff00;">Round 1: Written Multiple Choice (Knockout)</span>
+                        <span style="font-weight:bold; color:#ffff00;">Round 1: Written Multiple Choice
+                            (Knockout)</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li>This round will consist of 20 multiple-choice questions.</li>
                             <li>A time limit of 30 minutes will be given.</li>
                             <li>The top five teams with the highest scores will advance to Round 2.</li>
-                            <li>A tiebreaker question will be used if necessary to determine finalists.</li>
+                            <li>A tiebreaker question will be used if necessary to determine finalists.
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -513,28 +604,34 @@
                         <ul style="list-style-type: disc;" id="change-disc-style">
                             <li>This round will have 5 questions asked orally to each team.</li>
                             <li>Teams will have 30 seconds to answer each question.</li>
-                            <li>If a team answers incorrectly, the question can be answered by the next team.</li>
-                            <li>Tiebreaker questions will be asked if there is a tie for the winning positions.</li>
+                            <li>If a team answers incorrectly, the question can be answered by the next
+                                team.</li>
+                            <li>Tiebreaker questions will be asked if there is a tie for the winning
+                                positions.</li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>2000/-</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1000/-</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2000/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1000/-</b>
+                    </li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">50/-</b>
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>To be announced</b>
                 </p>
-            
-               
-            
+
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -543,187 +640,219 @@
             <!--FreeFire-->
             <div class="game-card">
                 <h3>LOOT N SHOOT</h3>
-                <h5>Assemble your squad for a fast-paced mobile battle royale. Fight, survive, and be the last team standing to claim the ultimate "Booyah!"</h5>
+                <h5>Assemble your squad for a fast-paced mobile battle royale. Fight, survive, and be
+                    the last team
+                    standing to claim the ultimate "Booyah!"</h5>
                 <p id="main-p" class="main-p">Free Fire</p>
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">Rules and Regulations : </p>
                 <p class="main-rules-data1">
-                    <ul id="main-rules-data1">
-                        <li>Participants must bring their smartphones and other required items.</li>
-                        <li>Teams are required to register before the tournament begins; no late registrations will be accepted.</li>
-                        <li>The tournament format will be either Battle Royale or Clash Squad, depending on team availability.</li>
-                        <li>Decision of the committee will be final.</li>
-                    </ul>
+                <ul id="main-rules-data1">
+                    <li>Participants must bring their smartphones and other required items.</li>
+                    <li>Teams are required to register before the tournament begins; no late
+                        registrations will be
+                        accepted.</li>
+                    <li>The tournament format will be either Battle Royale or Clash Squad, depending on
+                        team
+                        availability.</li>
+                    <li>Decision of the committee will be final.</li>
+                </ul>
                 </p>
-            
+
                 <p class="main-rules2" id="main-rules2">Match Rules : </p>
                 <p class="main-rules-data2">
-                    <ol id="main-rules-data2">
-                        <li>
-                            <span style="font-weight:bold; color:#ffff00;">Game Rules</span>
-                            <ul style="list-style-type: disc;">
-                                <li>Each team must have 4 players.</li>
-                                <li>Character skill will be off.</li>
-                                <li>Gun skin will be on.</li>
-                                <li>The cash prize will be distributed among the team members.</li>
-                                <li>If any player in a team breaks the rules, the whole team will be disqualified.</li>
-                                <li>Number of Slots : 16</li>
-                            </ul>
-                        </li>
-                    </ol>
+                <ol id="main-rules-data2">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Game Rules</span>
+                        <ul style="list-style-type: disc;">
+                            <li>Each team must have 4 players.</li>
+                            <li>Character skill will be off.</li>
+                            <li>Gun skin will be on.</li>
+                            <li>The cash prize will be distributed among the team members.</li>
+                            <li>If any player in a team breaks the rules, the whole team will be
+                                disqualified.</li>
+                            <li>Number of Slots : 16</li>
+                        </ul>
+                    </li>
+                </ol>
                 </p>
-            
+
                 <p class="main-rules3" id="main-rules3">Prize & Fair Play : </p>
                 <p class="main-rules-data3">
-                    <ul id="main-rules-data3">
-                        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>1000/-</b></li>
-                        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>800/-</b></li>
-                    </ul>
+                <ul id="main-rules-data3">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>1000/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>800/-</b>
+                    </li>
+                </ul>
                 </p>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">100/-</b> per team
                 </p>
-            
+
                 <p class="number-of-slots" id="number-of-slots">
                     Number of Slots : <b>16</b>
                 </p>
-            
-               
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
                 </div>
             </div>
-            
+
             <!--mini miltia-->
             <div class="game-card">
                 <h3>MILITIA MAYHEM</h3>
-                <h5>Grab your jetpack and dive into chaotic 2D mayhem! Dodge, shoot, and blast your way through opponents in this classic shooter showdown.</h5>
+                <h5>Grab your jetpack and dive into chaotic 2D mayhem! Dodge, shoot, and blast your way
+                    through
+                    opponents in this classic shooter showdown.</h5>
                 <p id="main-p" class="main-p">Mini Militia</p>
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">Rules and Regulations : </p>
                 <p class="main-rules-data1">
-                    <ul id="main-rules-data1">
-                        <li>Maximum of 4 per team</li>
-                        <li>Players must use the specific game version provided by the organizers.</li>
-                        <li>Devices must handle game without lag and be fully charged before matches.</li>
-                        <li>All players must connect to the same local wifi-network provided by the organizer.</li>
-                        <li>Use of external apps (VPNs, boosters, hacks, etc.) is strictly prohibited.</li>
-                        <li>Gas grenades are not allowed in matches.</li>
-                        <li>Number of slots: 12</li>
-                    </ul>
+                <ul id="main-rules-data1">
+                    <li>Maximum of 4 per team</li>
+                    <li>Players must use the specific game version provided by the organizers.</li>
+                    <li>Devices must handle game without lag and be fully charged before matches.</li>
+                    <li>All players must connect to the same local wifi-network provided by the
+                        organizer.</li>
+                    <li>Use of external apps (VPNs, boosters, hacks, etc.) is strictly prohibited.</li>
+                    <li>Gas grenades are not allowed in matches.</li>
+                    <li>Number of slots: 12</li>
+                </ul>
                 </p>
-            
+
                 <p class="main-rules2" id="main-rules2">Match Rules : </p>
                 <p class="main-rules-data2">
-                    <ol id="main-rules-data2">
-                        <li>
-                            <span style="font-weight:bold; color:#ffff00;">Tournament Format</span>
-                            <ul style="list-style-type: disc;">
-                                <li>Knockout format</li>
-                                <li>Map: <span style="color:#ffff00;">Outpost</span></li>
-                                <li>Duration: <span style="color:#ffff00;">10 minutes</span></li>
-                            </ul>
-                        </li>
-                    </ol>
+                <ol id="main-rules-data2">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Tournament Format</span>
+                        <ul style="list-style-type: disc;">
+                            <li>Knockout format</li>
+                            <li>Map: <span style="color:#ffff00;">Outpost</span></li>
+                            <li>Duration: <span style="color:#ffff00;">10 minutes</span></li>
+                        </ul>
+                    </li>
+                </ol>
                 </p>
-            
+
                 <p class="main-rules3" id="main-rules3">Prize & Fair Play : </p>
                 <p class="main-rules-data3">
-                    <ul id="main-rules-data3">
-                        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>600/-</b></li>
-                        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>400/-</b></li>
-                    </ul>
+                <ul id="main-rules-data3">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>600/-</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>400/-</b>
+                    </li>
+                </ul>
                 </p>
-            
-                <p class="main-rules-data4" id="main-rules-data4">Registration Fees : <b class="reg-fees">100/-</b> per team</p>
-               
+
+                <p class="main-rules-data4" id="main-rules-data4">Registration Fees : <b class="reg-fees">100/-</b> per
+                    team</p>
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
                 </div>
             </div>
-            
-            
+
+
             <!--PES-->
             <div class="game-card">
                 <h3>ICONIC CLASH</h3>
                 <p id="main-p" class="main-p">e-Football</p>
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-                
+
                 <p class="main-rules1" id="main-rules1">Rules and Regulations : </p>
                 <p class="main-rules-data1">
-                    <ul id="main-rules-data1">
-                        <li>All players must respect fair play and sportsmanship.</li>
-                        <li>Matches will be played on the latest version of eFootball.</li>
-                        <li>Controllers must be configured before the match begins.</li>
-                        <li>Any form of cheating or exploiting bugs will result in disqualification.</li>
-                    </ul>
+                <ul id="main-rules-data1">
+                    <li>All players must respect fair play and sportsmanship.</li>
+                    <li>Matches will be played on the latest version of eFootball.</li>
+                    <li>Controllers must be configured before the match begins.</li>
+                    <li>Any form of cheating or exploiting bugs will result in disqualification.</li>
+                </ul>
                 </p>
-                
+
                 <p class="main-rules2" id="main-rules2">Match Rules : </p>
                 <p class="main-rules-data2">
-                    <ol id="main-rules-data2">
-                        <li>
-                            <span style="font-weight:bold; color:#ffff00;">PvP Mode (Slots : 64)</span>
-                            <ul>
-                                <li>Match duration: 8 minutes</li>
-                                <li>Team strength: must be 3100 or less</li>
-                                <li>Card usage: any card is allowed</li>
-                                <li>Player condition: set to excellent</li>
-                                <li>Substitutions: maximum of 6</li>
-                                <li>Extra time & penalties: enabled</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span style="font-weight:bold; color:#ffff00;">Co-op Mode (Slots : 16)</span>
-                            <ul>
-                                <li>Team composition: 3 member team</li>
-                                <li>Match duration: 10 minutes</li>
-                                <li>Team strength: no limitation</li>
-                                <li>Other rules: same as PvP mode</li>
-                            </ul>
-                        </li>
-                    </ol>
+                <ol id="main-rules-data2">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">PvP Mode (Slots : 64)</span>
+                        <ul>
+                            <li>Match duration: 8 minutes</li>
+                            <li>Team strength: must be 3100 or less</li>
+                            <li>Card usage: any card is allowed</li>
+                            <li>Player condition: set to excellent</li>
+                            <li>Substitutions: maximum of 6</li>
+                            <li>Extra time & penalties: enabled</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Co-op Mode (Slots : 16)</span>
+                        <ul>
+                            <li>Team composition: 3 member team</li>
+                            <li>Match duration: 10 minutes</li>
+                            <li>Team strength: no limitation</li>
+                            <li>Other rules: same as PvP mode</li>
+                        </ul>
+                    </li>
+                </ol>
                 </p>
-                
-            
+
+
                 <p class="main-rules3" id="main-rules3">Prize & Fair Play :</p>
                 <p class="main-rules-data3">
-                    <ul id="main-rules-data3">
-                        <li>PvP Mode: Prizes will be given to the players ranking #1 and #2</li>
-                        <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize : <b>2000/-</b></li>
-                        <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1500/-</b></li>
-                        <li>Coop Mode: Prizes will be given to the teams ranking #1 and #2</li>
-                        <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize : <b>2000/-</b></li>
-                        <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>1500/-</b></li>
-                        <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Top Scoring Team: <b>500/-</b></li>
-                    </ul>
+                <ul id="main-rules-data3">
+                    <li>PvP Mode: Prizes will be given to the players ranking #1 and #2</li>
+                    <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2000/-</b>
+                    </li>
+                    <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1500/-</b>
+                    </li>
+                    <li>Coop Mode: Prizes will be given to the teams ranking #1 and #2</li>
+                    <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2000/-</b>
+                    </li>
+                    <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>1500/-</b>
+                    </li>
+                    <li style="list-style: none;color: #ffff00;">&nbsp;&nbsp;&nbsp;Top Scoring Team:
+                        <b>500/-</b>
+                    </li>
+                </ul>
                 </p>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
-                    Registration Fees : <br>PvP Entry: <b class="reg-fees">100/-</b> per player<br>Coop Entry:<b class="reg-fees"> 150/-</b> per team
+                    Registration Fees : <br>PvP Entry: <b class="reg-fees">100/-</b> per player<br>Coop
+                    Entry:<b class="reg-fees"> 150/-</b> per team
                 </p>
                 <p class="event-details" style="display:block">
-                    Take to the virtual pitch and showcase your football mastery. Build your dream team, outplay your
-            opponent, and score legendary goals!
+                    Take to the virtual pitch and showcase your football mastery. Build your dream team,
+                    outplay your
+                    opponent, and score legendary goals!
                 </p>
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
                 </div>
             </div>
-            
+
             <!--bgmi-->
             <div class="game-card">
                 <h3>RED ZONE</h3>
                 <p id="main-p" class="main-p">BGMI Game</p>
                 <p class="main-date" id="main-date">Dec 1, 10 am</p>
                 <p class="main-rules1" id="main-rules1">Rules and Regulations : </p>
-                <p class="main-rules-data1"><ul id="main-rules-data1">
+                <p class="main-rules-data1">
+                <ul id="main-rules-data1">
                     <li>Total Teams : 25</li>
                     <li>Platfrom - Only mobile devices allowed (no emulator,controller or triggers)</li>
                     <li>Game Version - Latest BGMI version must be installed before the match</li>
@@ -732,24 +861,213 @@
                 </ul>
                 </p>
                 <p class="main-rules2" id="main-rules2">Match Rules : </p>
-                <p class="main-rules-data2"><ul id="main-rules-data2">
-                    <li>Cheating If any player get caught using any sort of hacks/scripts, the entire team will get disqualified.</li>
-                    <li>Teaming - Teams from different squads teaming up results in disqualification.</li>
+                <p class="main-rules-data2">
+                <ul id="main-rules-data2">
+                    <li>Cheating If any player get caught using any sort of hacks/scripts, the entire
+                        team will get
+                        disqualified.</li>
+                    <li>Teaming - Teams from different squads teaming up results in disqualification.
+                    </li>
                     <li>Glitches - No exploring map glitches.</li>
                     <li>Mic Usage - In game voice chat allowed but keep it clean.</li>
-                    <li>Players should report at the venue on time or will get disqualified , no refunds will be provided.</li>
-                </ul></p>
-                <p class="main-rules3" id="main-rules3">Prize & Fair Play : </p>&#10;
+                    <li>Players should report at the venue on time or will get disqualified , no refunds
+                        will be
+                        provided.</li>
+                </ul>
+                </p>
+                <p class="main-rules3" id="main-rules3">Prize & Fair Play : </p>
                 <p class="main-rules-data3">
-                    <ul id="main-rules-data3">
-                        <li>Prizes will be given to the teams with ranking #1 and #2</li>
-                        <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize : <b>2000/-</b></li>
-                        <li style="list-style: none;color: #ffff00;"">&nbsp;&nbsp;&nbsp;Second Prize : <b>1000/-</b></li>
+                <ul id="main-rules-data3">
+                    <li>Prizes will be given to the teams with ranking #1 and #2</li>
+                    <li style="list-style: none;color: #ffff00">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>2000/-</b>
+                    </li>
+                    <li style="list-style: none;color: #ffff00;"">&nbsp;&nbsp;&nbsp;Second Prize : <b>1000/-</b></li>
                     </ul>
                 </p>
-                <p class="main-rules-data4" id="main-rules-data4">Registration Fees : <b class="reg-fees">200/-</b>per slot</p>
-               <p class="event-details" style="display:block">Drop into India's favourite battlegrounds with your squad. Strategize, loot, and survive to claim
-                    that coveted "Winner Winner Chicken Dinner!"</p>
+                <p class=" main-rules-data4" id="main-rules-data4">Registration Fees : <b class="reg-fees">200/-</b>per
+                        slot</p>
+                        <p class="event-details" style="display:block">Drop into India's favourite
+                            battlegrounds with
+                            your squad. Strategize, loot, and survive to claim
+                            that coveted "Winner Winner Chicken Dinner!"</p>
+                        <div class="game-card-buttons">
+                            <a href="#" class="pixel-button">ENTER</a>
+                            <a href="#" class="pixel-button-preview">PREVIEW</a>
+                        </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="workshop" class="game-section">
+        <h2 class="section-title glitch" data-text="WORKSHOP LEVELS">WORKSHOP</h2>
+        <div class="game-grid">
+            <div class="game-card">
+                <h3>Build & Learn</h3>
+                <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
+
+                <!-- Hidden content for popup - same structure as other cards -->
+                <p id="main-p" class="main-p" style="display:none;">Workshop</p>
+                <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced
+                </p>
+
+                <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations :
+                </p>
+                <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
+                    <li>The program has a duration of up to 2 hours.</li>
+                    <li>Students can bring their own systems or use the systems provided by the college.
+                    </li>
+                    <li>All participants must register before the workshop begins.</li>
+                    <li>Active participation and engagement is encouraged throughout the session.</li>
+                    <li>cooding knowledge is not needed</li>
+                </ul>
+
+                <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
+                <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
+                        <ul style="list-style-type: disc;" id="change-disc-style">
+                            <li><b>Duration:</b> 2 hours hands-on workshop</li>
+                            <li><b>Equipment:</b> Bring your own laptop or use college-provided systems
+                            </li>
+                            <li><b>Focus:</b> Learn to scale small projects and improve your skill</li>
+                            <li><b>Level:</b> Intermediate to Advanced programming concepts</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
+                <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC WEB PROJECTS
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC C PROGRAMMING
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC PYTHON
+                        PROGRAMMING</li>
+                </ul>
+
+                <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
+                    Registration Fees : <b class="reg-fees">30/-</b> per person
+                </p>
+
+                <p class="number-of-slots" id="number-of-slots" style="display:none;">
+                    Number of Slots : <b>To be announced</b>
+                </p>
+
+                <div class="game-card-buttons">
+                    <a href="#" class="pixel-button">ENTER</a>
+                    <a href="#" class="pixel-button-preview">PREVIEW</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <h3>Build & Scale</h3>
+                <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
+                <p id="main-p" class="main-p" style="display:none;">Workshop</p>
+                <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced
+                </p>
+
+                <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations :
+                </p>
+                <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
+                    <li>The program has a duration of up to 2 hours.</li>
+                    <li>Students can bring their own systems or use the systems provided by the college.
+                    </li>
+                    <li>All participants must register before the workshop begins.</li>
+                    <li>Active participation and engagement is encouraged throughout the session.</li>
+                    <li>Participants should come prepared with basic knowledge of programming concepts.
+                    </li>
+                    <li>basic cooding knowledge is needed</li>
+                </ul>
+
+                <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
+                <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
+                        <ul style="list-style-type: disc;" id="change-disc-style">
+                            <li><b>Duration:</b> 2 hours hands-on workshop</li>
+                            <li><b>Equipment:</b> Bring your own laptop or use college-provided systems
+                            </li>
+                            <li><b>Goals:</b> build a small project based on your ideas</li>
+                            <li><b>Level:</b> Intermediate to Advanced programming concepts</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
+                <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;WEB BASED PROJECTS
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;C PROGRAMMING</li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;PYTHON PROGRAMMING
+                    </li>
+                </ul>
+
+                <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
+                    Registration Fees : <b class="reg-fees">30/-</b> per person
+                </p>
+
+                <p class="number-of-slots" id="number-of-slots" style="display:none;">
+                    Number of Slots : <b>To be announced</b>
+                </p>
+
+                <div class="game-card-buttons">
+                    <a href="#" class="pixel-button">ENTER</a>
+                    <a href="#" class="pixel-button-preview">PREVIEW</a>
+                </div>
+            </div>
+            <div class="game-card">
+                <h3>Build & Lead </h3>
+                <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
+                <p id="main-p" class="main-p" style="display:none;">Workshop</p>
+                <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced
+                </p>
+
+                <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations :
+                </p>
+                <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
+                    <li>The program has a duration of up to 2 hours.</li>
+                    <li>Students can bring their own systems or use the systems provided by the college.
+                    </li>
+                    <li>All participants must register before the workshop begins.</li>
+                    <li>Active participation and engagement is encouraged throughout the session.</li>
+                    <li>Participants should come prepared with basic knowledge of programming concepts.
+                    </li>
+                    <li>Need a minimum level of cooding</li>
+                </ul>
+
+                <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
+                <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
+                        <ul style="list-style-type: disc;" id="change-disc-style">
+                            <li><b>Duration:</b> 2 hours hands-on workshop</li>
+                            <li><b>Equipment:</b> Bring your own laptop or use college-provided systems
+                            </li>
+                            <li><b>Goals:</b> build a project based on your ideas</li>
+                            <li><b>Leve:</b> Advanced programming concepts(must need a basic knowledge
+                                of programming)
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
+                <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;WEB BASED PROJECTS
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;C PROGRAMMING</li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;PYTHON PROGRAMMING
+                    </li>
+                </ul>
+
+                <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
+                    Registration Fees : <b class="reg-fees">300/-</b> per person
+                </p>
+
+                <p class="number-of-slots" id="number-of-slots" style="display:none;">
+                    Number of Slots : <b>To be announced</b>
+                </p>
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
@@ -758,263 +1076,134 @@
         </div>
     </section>
 
-    <section id="workshop" class="game-section">
-        <h2 class="section-title glitch" data-text="WORKSHOP LEVELS">WORKSHOP</h2>
-        <div class="game-grid">
-<div class="game-card">
-    <h3>Build & Learn</h3>
-    <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
-    
-    <!-- Hidden content for popup - same structure as other cards -->
-    <p id="main-p" class="main-p" style="display:none;">Workshop</p>
-    <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced</p>
-    
-    <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations : </p>
-    <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
-        <li>The program has a duration of up to 2 hours.</li>
-        <li>Students can bring their own systems or use the systems provided by the college.</li>
-        <li>All participants must register before the workshop begins.</li>
-        <li>Active participation and engagement is encouraged throughout the session.</li>
-         <li>cooding knowledge is not needed</li>
-    </ul>
-    
-    <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
-    <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
-        <li>
-            <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
-            <ul style="list-style-type: disc;" id="change-disc-style">
-                <li><b>Duration:</b> 2 hours hands-on workshop</li>
-                <li><b>Equipment:</b> Bring your own laptop or use college-provided systems</li>
-                <li><b>Focus:</b> Learn to scale small projects and improve your skill</li>
-                <li><b>Level:</b> Intermediate to Advanced programming concepts</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
-    <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC WEB PROJECTS </li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC C PROGRAMMING</li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;BASIC PYTHON PROGRAMMING</li>
-    </ul>
-    
-    <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
-        Registration Fees : <b class="reg-fees">30/-</b> per person
-    </p>
-    
-    <p class="number-of-slots" id="number-of-slots" style="display:none;">
-        Number of Slots : <b>To be announced</b>
-    </p>
-    
-    <div class="game-card-buttons">
-        <a href="#" class="pixel-button">ENTER</a>
-        <a href="#" class="pixel-button-preview">PREVIEW</a>
-    </div>
-</div>
-    <div class="game-card">
-        <h3>Build & Scale</h3>
-        <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
-        <p id="main-p" class="main-p" style="display:none;">Workshop</p>
-    <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced</p>
-    
-    <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations : </p>
-    <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
-        <li>The program has a duration of up to 2 hours.</li>
-        <li>Students can bring their own systems or use the systems provided by the college.</li>
-        <li>All participants must register before the workshop begins.</li>
-        <li>Active participation and engagement is encouraged throughout the session.</li>
-        <li>Participants should come prepared with basic knowledge of programming concepts.</li>
-         <li>basic cooding knowledge is needed</li>
-    </ul>
-    
-    <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
-    <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
-        <li>
-            <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
-            <ul style="list-style-type: disc;" id="change-disc-style">
-                <li><b>Duration:</b> 2 hours hands-on workshop</li>
-                <li><b>Equipment:</b> Bring your own laptop or use college-provided systems</li>
-                <li><b>Goals:</b> build a small project based on your ideas</li>
-                <li><b>Level:</b> Intermediate to Advanced programming concepts</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
-    <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;WEB BASED PROJECTS </li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;C PROGRAMMING</li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;PYTHON PROGRAMMING</li>
-    </ul>
-    
-    <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
-        Registration Fees : <b class="reg-fees">50/-</b> per person
-    </p>
-    
-    <p class="number-of-slots" id="number-of-slots" style="display:none;">
-        Number of Slots : <b>To be announced</b>
-    </p>
-    
-    <div class="game-card-buttons">
-        <a href="#" class="pixel-button">ENTER</a>
-        <a href="#" class="pixel-button-preview">PREVIEW</a>
-    </div>
-</div>
-            <div class="game-card">
-                <h3>Build & Lead </h3>
-            <h5>Expand your horizons—transform small ideas into scalable solutions</h5>
-                       <p id="main-p" class="main-p" style="display:none;">Workshop</p>
-    <p class="main-date" id="main-date" style="display:none;">Date & Time: To be announced</p>
-    
-    <p class="main-rules1" id="main-rules1" style="display:none;">Rules and Regulations : </p>
-    <ul id="main-rules-data1" class="main-rules-data1" style="display:none;">
-        <li>The program has a duration of up to 2 hours.</li>
-        <li>Students can bring their own systems or use the systems provided by the college.</li>
-        <li>All participants must register before the workshop begins.</li>
-        <li>Active participation and engagement is encouraged throughout the session.</li>
-        <li>Participants should come prepared with basic knowledge of programming concepts.</li>
-        <li>Need a minimum level of cooding</li>
-    </ul>
-    
-    <p class="main-rules2" id="main-rules2" style="display:none;">Workshop Format : </p>
-    <ul id="main-rules-data2" class="main-rules-data2" style="display:none;">
-        <li>
-            <span style="font-weight:bold; color:#ffff00;">Session Structure</span>
-            <ul style="list-style-type: disc;" id="change-disc-style">
-                <li><b>Duration:</b> 2 hours hands-on workshop</li>
-                <li><b>Equipment:</b> Bring your own laptop or use college-provided systems</li>
-                <li><b>Goals:</b> build a project based on your ideas</li>
-                <li><b>Leve:</b>  Advanced programming concepts(must need a basic knowledge of programming)</li>
-            </ul>
-        </li>
-    </ul>
-    
-    <p class="main-rules3" id="main-rules3" style="display:none;">What You'll Learn : </p>
-    <ul id="main-rules-data3" class="main-rules-data3" style="display:none;">
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;WEB BASED PROJECTS </li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;C PROGRAMMING</li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;PYTHON PROGRAMMING</li>
-    </ul>
-    
-    <p class="main-rules-data4" id="main-rules-data4" style="display:none;">
-        Registration Fees : <b class="reg-fees">300/-</b> per person
-    </p>
-    
-    <p class="number-of-slots" id="number-of-slots" style="display:none;">
-        Number of Slots : <b>To be announced</b>
-    </p>
-    
-    <div class="game-card-buttons">
-        <a href="#" class="pixel-button">ENTER</a>
-        <a href="#" class="pixel-button-preview">PREVIEW</a>
-    </div>
-     </div>
-    </section>
-
     <!-- Events Section -->
     <section id="events" class="game-section">
         <h2 class="section-title glitch" data-text="BONUS LEVELS">BONUS LEVELS</h2>
         <div class="game-grid">
             <div class="game-card">
                 <h3>FINAL WHISTLE</h3>
-            
-                <h5>This is 3-vs-3 football on a small pitch. A fast-paced game of quick goals where pure skill and
+
+                <h5>This is 3-vs-3 football on a small pitch. A fast-paced game of quick goals where
+                    pure skill and
                     relentless teamwork decide the champion.</h5>
-            
+
                 <p id="main-p" class="main-p">3's Football</p>
-            
+
                 <p class="main-date" id="main-date">Date & Time: To be announced</p>
-            
+
                 <p class="main-rules1" id="main-rules1">General Rules : </p>
                 <ul id="main-rules-data1" class="main-rules-data1">
                     <li>Each team must consist of 5 players (3 on-field + 2 substitutes).</li>
                     <li>A full football kit (boots, jersey, shorts) is mandatory for all players.</li>
-                    <li>Teams must report 15 minutes before their scheduled match time to avoid a walkover.</li>
-                    <li>Referee decisions are final. Misconduct or violence will result in immediate disqualification.</li>
+                    <li>Teams must report 15 minutes before their scheduled match time to avoid a
+                        walkover.</li>
+                    <li>Referee decisions are final. Misconduct or violence will result in immediate
+                        disqualification.
+                    </li>
                     <li>Organizers reserve the right to alter the schedule or rules if necessary.</li>
                 </ul>
-            
+
                 <p class="main-rules2" id="main-rules2">Tournament & Match Rules : </p>
                 <ol id="main-rules-data2" class="main-rules-data2">
                     <li>
                         <span style="font-weight:bold; color:#ffff00;">Format</span>
                         <ul style="list-style-type: disc;" id="change-disc-style">
-                            <li><b>Structure:</b> 16-team knockout tournament divided into 2 pools of 8.</li>
-                            <li><b>Final Match:</b> The winners of each pool will face off in the final.</li>
-                            <li><b>Match Duration:</b> To be decided by the organizers on the day of the event.</li>
-                            <li><b>Substitutions:</b> Rolling substitutions are permitted during stoppages in play.</li>
+                            <li><b>Structure:</b> 16-team knockout tournament divided into 2 pools of 8.
+                            </li>
+                            <li><b>Final Match:</b> The winners of each pool will face off in the final.
+                            </li>
+                            <li><b>Match Duration:</b> To be decided by the organizers on the day of the
+                                event.</li>
+                            <li><b>Substitutions:</b> Rolling substitutions are permitted during
+                                stoppages in play.</li>
                         </ul>
                     </li>
                 </ol>
-                
+
                 <p class="main-rules3" id="main-rules3">Prizes : </p>
                 <ul id="main-rules-data3" class="main-rules-data3">
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>3000/- + Trophy + Medals</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>2200/- + Medals</b></li>
-                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Individual Award : Top Scorer</li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize :
+                        <b>3000/- + Trophy +
+                            Medals</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize :
+                        <b>2200/- +
+                            Medals</b>
+                    </li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Individual Award :
+                        Top Scorer</li>
                 </ul>
-            
+
                 <p class="main-rules-data4" id="main-rules-data4">
                     Registration Fees : <b class="reg-fees">600/-</b>
                 </p>
 
-               
-            
+
+
                 <div class="game-card-buttons">
                     <a href="#" class="pixel-button">ENTER</a>
                     <a href="#" class="pixel-button-preview">PREVIEW</a>
                 </div>
             </div>
-                <!--Treasure Hunt-->
-    <div class="game-card">
-    <h3>THE LOST KEY</h3>
+            <!--Treasure Hunt-->
+            <div class="game-card">
+                <h3>THE LOST KEY</h3>
 
-    <h5>Embark on the quest for The Lost Key—solve cryptic puzzles, unlock secrets, and claim the glory that
+                <h5>Embark on the quest for The Lost Key—solve cryptic puzzles, unlock secrets, and
+                    claim the glory that
                     awaits the bold</h5>
-    <p id="main-p" class="main-p">Treasure Hunt</p>
+                <p id="main-p" class="main-p">Treasure Hunt</p>
 
-    <p class="main-date" id="main-date">Date & Time: To be announced</p>
+                <p class="main-date" id="main-date">Date & Time: To be announced</p>
 
-    <p class="main-rules1" id="main-rules1">Eligibility Rules : </p>
-    <ul id="main-rules-data1" class="main-rules-data1">
-        <li>The event is open to all participants who have completed registration.</li>
-        <li>Each team must consist of exactly 3 members.</li>
-        <li>Registration, including all details and fees, must be submitted before the event begins.</li>
-    </ul>
+                <p class="main-rules1" id="main-rules1">Eligibility Rules : </p>
+                <ul id="main-rules-data1" class="main-rules-data1">
+                    <li>The event is open to all participants who have completed registration.</li>
+                    <li>Each team must consist of exactly 3 members.</li>
+                    <li>Registration, including all details and fees, must be submitted before the event
+                        begins.</li>
+                </ul>
 
-    <p class="main-rules2" id="main-rules2">Game Rules & Format : </p>
-    <ol id="main-rules-data2" class="main-rules-data2">
-        <li>
-            <span style="font-weight:bold; color:#ffff00;">How to Play</span>
-            <ul style="list-style-type: disc;" id="change-disc-style">
-                <li><b>Clues:</b> Clues will be provided in paper rolls, with some featured on the main event banner.</li>
-                <li><b>Solving:</b> Teams must work together. Smartphones are allowed for research to solve clues.</li>
-                <li><b>Hints:</b> Limited hints will be available for particularly challenging clues.</li>
-            </ul>
-        </li>
-    </ol>
-    
-    <p class="main-rules3" id="main-rules3">Prizes : </p>
-    <ul id="main-rules-data3" class="main-rules-data3">
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs : 3000</b></li>
-        <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs : 1000</b></li>
-    </ul>
+                <p class="main-rules2" id="main-rules2">Game Rules & Format : </p>
+                <ol id="main-rules-data2" class="main-rules-data2">
+                    <li>
+                        <span style="font-weight:bold; color:#ffff00;">How to Play</span>
+                        <ul style="list-style-type: disc;" id="change-disc-style">
+                            <li><b>Clues:</b> Clues will be provided in paper rolls, with some featured
+                                on the main
+                                event banner.</li>
+                            <li><b>Solving:</b> Teams must work together. Smartphones are allowed for
+                                research to solve
+                                clues.</li>
+                            <li><b>Hints:</b> Limited hints will be available for particularly
+                                challenging clues.</li>
+                        </ul>
+                    </li>
+                </ol>
 
-    <p class="main-rules-data4" id="main-rules-data4">
-        Registration Fees : <b class="reg-fees">To be announced</b>
-    </p>
+                <p class="main-rules3" id="main-rules3">Prizes : </p>
+                <ul id="main-rules-data3" class="main-rules-data3">
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;First Prize : <b>Rs
+                            : 3000</b></li>
+                    <li style="list-style: none; color: #ffff00;">&nbsp;&nbsp;&nbsp;Second Prize : <b>Rs
+                            : 1000</b></li>
+                </ul>
 
-    <p class="number-of-slots" id="number-of-slots">
-        Number of Slots : <b>To be announced</b>
-    </p>
+                <p class="main-rules-data4" id="main-rules-data4">
+                    Registration Fees : <b class="reg-fees">To be announced</b>
+                </p>
 
-    <p class="event-details" style="display:block"></p>
+                <p class="number-of-slots" id="number-of-slots">
+                    Number of Slots : <b>To be announced</b>
+                </p>
 
-    <div class="game-card-buttons">
-        <a href="#" class="pixel-button">ENTER</a>
-        <a href="#" class="pixel-button-preview">PREVIEW</a>
-    </div>
-</div>
+                <p class="event-details" style="display:block"></p>
+
+                <div class="game-card-buttons">
+                    <a href="#" class="pixel-button">ENTER</a>
+                    <a href="#" class="pixel-button-preview">PREVIEW</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1049,20 +1238,20 @@
     <!-- Event Modal -->
     <div id="event-modal" class="konami-modal">
         <div class="konami-content">
-          <h2 id="event-title"></h2>
-          <p id="event-description"></p>
-          <p id="event-date"></p>
-          <p id="event-rules"></p>
-          <p id="event-rules-desc"></p>
-          <p id="event-match"></p>
-          <p id="event-match-desc"></p>
-          <p id="event-prize"></p>
-          <p id="event-prize-desc"></p>
-          <p id="event-reg-fees"></p>
-          <div class="event-details"></div>
-          <button id="close-event" class="pixel-button" onclick="closeEventBtnHere()">CLOSE</button>
+            <h2 id="event-title"></h2>
+            <p id="event-description"></p>
+            <p id="event-date"></p>
+            <p id="event-rules"></p>
+            <p id="event-rules-desc"></p>
+            <p id="event-match"></p>
+            <p id="event-match-desc"></p>
+            <p id="event-prize"></p>
+            <p id="event-prize-desc"></p>
+            <p id="event-reg-fees"></p>
+            <div class="event-details"></div>
+            <button id="close-event" class="pixel-button" onclick="closeEventBtnHere()">CLOSE</button>
         </div>
-      </div>
+    </div>
 
 
     <!-- Tone.js for better 8-bit sounds -->
