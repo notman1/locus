@@ -649,6 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     }).toDestination();
 
+    Tone.Destincation.volume.value = -10;
     function playSound(note, duration) {
         if (Tone.context.state !== 'running') {
             Tone.context.resume();
@@ -908,5 +909,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 
 }); // End DOMContentLoaded

@@ -87,9 +87,6 @@ body {
     font-size: 12px;
     overflow-x: hidden;
     /* Prevent horizontal scrollbars */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 .sr-only {
@@ -512,7 +509,7 @@ nav {
     margin: 0 auto;
 }
 
-.game-grid .game-card li {
+.game-card li {
     display: none;
 }
 
@@ -547,7 +544,7 @@ nav {
 }
 
 #game-grid-competition p,
-.game-grid p {
+.game-section p {
     display: none;
 }
 
@@ -669,7 +666,6 @@ footer {
     border-top: 6px solid var(--pixel-blue);
     padding: 40px 20px 20px;
     text-align: center;
-    margin-top: auto;
 }
 
 .social-icons {

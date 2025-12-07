@@ -969,7 +969,7 @@
    
 
     <!-- External script for Tone.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    
     
     <!-- Combined and fixed application script -->
     <script>
@@ -1285,61 +1285,8 @@
                 console.error('Tone.js not loaded, sounds disabled.');
                 return;
             }
+          }
 
-            const synth = new Tone.Synth({
-                oscillator: { type: 'square' },
-                envelope: {
-                    attack: 0.005,
-                    decay: 0.1,
-                    sustain: 0.3,
-                    release: 0.2,
-                },
-            }).toDestination();
-
-            // Variable to track last hover sound time for debouncing
-            let lastHoverSoundTime = 0;
-
-            function playSound(note, duration) {
-                if (Tone.context.state !== 'running') {
-                    Tone.context.resume().catch(e => console.error("Tone.js resume error:", e));
-                }
-                try {
-                    // Stop any previous sound immediately before starting a new one
-                    // And schedule the new sound to start 'now'
-                    synth.triggerAttackRelease(note, duration, Tone.now());
-                } catch (e) {
-                    // We can safely ignore the "start time" error here if it still happens,
-                    // but the debounce should prevent it.
-                    if (!e.message.includes("Start time")) {
-                      console.error("Tone.js play error:", e);
-                    }
-                }
-            }
-
-            // Click sound for all interactive elements
-            document.querySelectorAll('a, button, .btn').forEach(element => {
-                element.addEventListener('click', () => playSound('C4', '8n'));
-            });
-
-            // Hover sound for game cards and nav links (DEBOUNCED)
-            document.querySelectorAll('.game-card, .nav-links a, .competition-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    const now = Tone.now();
-                    // Only play if 100ms have passed since the last hover sound
-                    if (now - lastHoverSoundTime > 0.1) {
-                        playSound('C5', '16n');
-                        lastHoverSoundTime = now;
-                    }
-                });
-            });
-        }
-
-        function toggleSound() {
-          // This function was empty in the original app.js
-          // You could add logic here to mute/unmute Tone.js
-          // e.g., Tone.Destination.mute = !Tone.Destination.mute;
-          console.log("Sound toggle clicked (functionality not implemented)");
-        }
 
         function nextStep() {
           if (validateCurrentStep()) {
