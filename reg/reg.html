@@ -1531,50 +1531,59 @@
           reviewSection.innerHTML = html;
         }
 
-     async function handleSubmit(e) {
+    async function handleSubmit(e) {
   e.preventDefault();
 
   const data = collectFormData();
   const totalAmount = data.totalPrice;
 
-  if (totalAmount <= 0) {
-    alert("Select at least one event");
+  if (!totalAmount || totalAmount <= 0) {
+    showError("Please select at least one competition.");
     return;
   }
 
-  const res = await fetch("/api/create-order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: totalAmount })
-  });
+  try {
+    const res = await fetch("/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        personal: data.personal,
+        competitions: data.competitions,
+        amount: totalAmount
+      })
+    });
 
-  const order = await res.json();
+    const order = await res.json();
 
-  if (!order.orderId) {
-    alert("Failed to create order");
-    console.error(order);
-    return;
-  }
-
-  const options = {
-    key: order.key,
-    amount: order.amount,
-    currency: "INR",
-    name: "LOCUS 2K26",
-    description: "Event Registration",
-    order_id: order.orderId,
-    handler: function (response) {
-      alert("Payment success");
-      console.log(response);
-    },
-    theme: {
-      color: "#00ff00"
+    if (!res.ok || !order.orderId) {
+      console.error("Create order failed:", order);
+      showError("Failed to create payment order.");
+      return;
     }
-  };
 
-  const rzp = new Razorpay(options);
-  rzp.open();
+    const options = {
+      key: order.key,
+      amount: order.amount,
+      currency: "INR",
+      name: "LOCUS 2K26",
+      description: "Event Registration",
+      order_id: order.orderId,
+
+      // optional but recommended:
+      // callback_url: "/payment-processing.html",
+
+      theme: { color: "#00ff00" }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+  } catch (err) {
+    console.error("Error during handleSubmit:", err);
+    showError("Something went wrong while starting the payment.");
+  }
 }
+
 
 
     </script>
