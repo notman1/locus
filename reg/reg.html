@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechFest Registration - Retro Gaming</title>
+    <title>TechFest Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     
     <!-- Added Razorpay checkout script -->
@@ -453,6 +453,12 @@
           align-items: center;
           gap: var(--space-8);
           min-width: 100px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .progress-step:hover {
+          transform: scale(1.05);
         }
 
         .step-number {
@@ -1245,6 +1251,19 @@
           // Modal close button
           closeModalBtn.addEventListener('click', closeSuccessModal);
           
+          // Progress step click handlers
+          const progressSteps = document.querySelectorAll('.progress-step');
+          progressSteps.forEach(step => {
+            step.style.cursor = 'pointer';
+            step.addEventListener('click', function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+              const stepNum = parseInt(this.getAttribute('data-step'));
+              console.log('Clicked step:', stepNum);
+              goToStep(stepNum);
+            });
+          });
+          
           // Sound toggle (Element is commented out in HTML)
           // const soundToggle = document.getElementById('soundToggle');
           // if (soundToggle) {
@@ -1338,6 +1357,45 @@
         function prevStep() {
           if (currentStep > 1) { // Prevent going before step 1
             currentStep--;
+            updateStep();
+          }
+        }
+
+        function goToStep(stepNum) {
+          // Validate that we're not skipping steps or going out of bounds
+          if (stepNum < 1 || stepNum > totalSteps) {
+            return;
+          }
+          
+          // If going backwards, allow it
+          if (stepNum < currentStep) {
+            currentStep = stepNum;
+            updateStep();
+            return;
+          }
+          
+          // If going forwards, validate all steps up to the target
+          let isValid = true;
+          for (let i = currentStep; i < stepNum; i++) {
+            const stepElement = document.querySelector(`.form-step[data-step="${i}"]`);
+            if (stepElement) {
+              const requiredInputs = stepElement.querySelectorAll('input[required], select[required]');
+              requiredInputs.forEach(input => {
+                if (!validateInput({ target: input })) {
+                  isValid = false;
+                }
+              });
+            }
+          }
+          
+          // Check if step 2 has at least one competition selected
+          if (stepNum > 2 && selectedCompetitions.length === 0) {
+            showError('Please select at least one competition.');
+            return;
+          }
+          
+          if (isValid) {
+            currentStep = stepNum;
             updateStep();
           }
         }
@@ -1478,6 +1536,13 @@
                 errorDiv.remove();
             }
           }, 3000);
+        }
+
+        function closeSuccessModal() {
+          const modal = document.getElementById('successModal');
+          if (modal) {
+            modal.classList.add('hidden');
+          }
         }
 
         function collectFormData() {
