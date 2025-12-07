@@ -5,76 +5,902 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechFest Registration - Retro Gaming</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="test.css">
+    
+    <!-- Added Razorpay checkout script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        /* CSS Variables for our 8-bit color palette */
+        :root {
+          --pixel-green: #00ff00;
+          --pixel-blue: #0080ff;
+          --pixel-red: #ff0040;
+          --pixel-yellow: #ffff00;
+          --pixel-purple: #8000ff;
+          --pixel-cyan: #00ffff;
+          --dark-bg: #12121f;
+          --darker-bg: #0a0f1d;
+          --pixel-white: #ffffff;
+          --pixel-black: #000000;
+          
+          /* Added standard spacing variables from the looks of the CSS */
+          --space-4: 4px;
+          --space-8: 8px;
+          --space-12: 12px;
+          --space-16: 16px;
+          --space-20: 20px;
+          --space-24: 24px;
+          --space-32: 32px;
+
+          /* Added font variable from the looks of the CSS */
+          --font-family-pixel: 'Press Start 2P', monospace;
+        }
+
+        /* Basic setup */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          font-family: 'Press Start 2P', monospace;
+          background-color: var(--dark-bg);
+          color: var(--pixel-white);
+          line-height: 1.8;
+          font-size: 12px;
+          overflow-x: hidden; /* Prevent horizontal scrollbars */
+          image-rendering: pixelated;
+          image-rendering: -moz-crisp-edges;
+          image-rendering: crisp-edges;
+        }
+
+        /* --- ENHANCED VISUAL EFFECTS --- */
+
+        /* Animated Pixel Grid Background */
+        body::before {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 200%;
+          height: 200%;
+          background-image: 
+            linear-gradient(var(--pixel-blue) 1px, transparent 1px),
+            linear-gradient(90deg, var(--pixel-blue) 1px, transparent 1px);
+          background-size: 40px 40px;
+          opacity: 0.1;
+          z-index: -2;
+          animation: pixelGridMove 20s linear infinite;
+        }
+
+        /* Scan Lines Overlay for CRT monitor vibe */
+        body::after {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0) 0px,
+            rgba(0, 0, 0, 0) 2px,
+            rgba(0, 0, 0, 0.2) 2px,
+            rgba(0, 0, 0, 0.2) 4px
+          );
+          z-index: 10000;
+          pointer-events: none;
+        }
+
+        /* Keyframe Animations */
+        @keyframes pixelGridMove {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(-50%, -50%); }
+        }
+
+        @keyframes blink {
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
+        }
+
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+          40% { transform: translateY(-10px); }
+          60% { transform: translateY(-5px); }
+        }
+
+        /* Glitch effect for titles */
+        .glitch {
+          position: relative;
+          animation: glitch-anim 2.5s infinite steps(1);
+        }
+
+        .glitch::before,
+        .glitch::after {
+          content: attr(data-text);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: var(--dark-bg);
+        }
+
+        .glitch::before {
+          left: 2px;
+          text-shadow: -2px 0 var(--pixel-red);
+          clip: rect(44px, 450px, 56px, 0);
+          animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+          left: -2px;
+          text-shadow: -2px 0 var(--pixel-blue), 2px 2px var(--pixel-red);
+          animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+          0% { clip: rect(7px, 9999px, 87px, 0); }
+          100% { clip: rect(92px, 9999px, 98px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+          0% { clip: rect(33px, 9999px, 74px, 0); }
+          100% { clip: rect(15px, 9999px, 63px, 0); }
+        }
+
+        @keyframes glitch-anim {
+          0% { transform: skew(0deg); }
+          10% { transform: skew(0.5deg); }
+          20% { transform: skew(0deg); }
+          80% { transform: skew(0deg); }
+          90% { transform: skew(-0.8deg); }
+          100% { transform: skew(0deg); }
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          background: var(--darker-bg);
+          border-bottom: 4px solid var(--pixel-green);
+          z-index: 1000;
+          padding: 15px 0;
+        }
+        .nav-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          font-size: 10px;
+        }
+
+        .logo {
+          font-size: 14px;
+          color: var(--pixel-yellow);
+          text-shadow: 2px 2px 0px var(--pixel-red);
+          user-select: none;
+        }
+
+        .nav-links {
+          color: var(--pixel-white);
+          display: flex;
+          gap: 15px;
+          list-style: none;
+        }
+
+        .nav-links a {
+          color: var(--pixel-white);
+          text-decoration: none;
+          padding: 8px 12px;
+          transition: all 0.2s ease;
+          text-transform: uppercase;
+          position: relative;
+          /* Width was causing overlap issues, removed */
+          /* width: 50px; */ 
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+          color: var(--pixel-yellow);
+          background: rgba(0, 255, 0, 0.1);
+          text-shadow: 0 0 5px var(--pixel-green);
+        }
+
+        .nav-links a:hover::before {
+          content: '>';
+          position: absolute;
+          left: 0;
+          animation: blink 0.8s infinite;
+        }
+
+        .nav-links a:hover::after {
+          content: '<';
+          position: absolute;
+          right: 0;
+          animation: blink 0.8s infinite;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+          height: 50vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 0 20px;
+          position: relative;
+          /* animation: matrixFall linear infinite; */ /* This animation wasn't defined, so I commented it out */
+          white-space: pre-line;
+          line-height: 1.2;
+          margin-top: 60px; /* Added margin to account for fixed nav */
+        }
+
+        .hero-content {
+          z-index: 2;
+          max-width: 800px;
+        }
+
+        .game-title {
+          font-size: clamp(28px, 6vw, 34px);
+          margin-bottom: 5px;
+          color: var(--pixel-yellow);
+          text-transform: uppercase;
+          letter-spacing: 4px;
+        }
+
+        .subtitle {
+          font-size: 10px;
+          margin-bottom: 10px;
+          color: var(--pixel-green);
+        }
+
+        .progress-bar {
+          display: flex;
+          color: var(--pixel-green);
+          justify-content: space-between;
+          margin-bottom: var(--space-32);
+          flex-wrap: wrap;
+          gap: var(--space-8);
+        }
+
+        /* --- General Section Styling --- */
+        .game-section {
+          padding: 50px 20px; /* Reduced horizontal padding for better responsiveness */
+          max-width: 1200px;
+          margin: 0 auto;
+          position: relative; /* Changed from auto */
+          border-bottom: 4px dashed var(--pixel-blue);
+        }
+
+        .game-section:last-of-type {
+          border-bottom: none;
+        }
+
+        .section-title {
+          font-size: 24px;
+          text-align: center;
+          margin-bottom: 50px;
+          color: var(--pixel-cyan);
+          text-transform: uppercase;
+        }
+
+        .section-title::before,
+        .section-title::after {
+          content: '★';
+          color: var(--pixel-green);
+          margin: 0 20px;
+          animation: blink 1.5s infinite alternate;
+        }
+
+        .pixel-button {
+          display: inline-block;
+          padding: 10px 20px;
+          background: var(--pixel-green);
+          color: var(--dark-bg);
+          text-decoration: none;
+          border: 2px solid var(--pixel-black);
+          font-family: 'Press Start 2P', monospace;
+          font-size: 10px;
+          text-transform: uppercase;
+          transition: all 0.2s ease;
+        }
+
+        .pixel-button:hover {
+          background: var(--pixel-yellow);
+          color: var(--pixel-red);
+          border-color: var(--pixel-red);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+          .nav-links {
+            display: none; /* In a real app, you'd add a hamburger menu */
+          }
+          /* Added hero adjustments */
+          .hero {
+            min-height: 40vh; /* Use min-height instead of fixed */
+            padding-top: 20px;
+            padding-bottom: 20px;
+          }
+          .game-title {
+            font-size: 24px;
+          }
+          .section-title {
+            font-size: 20px;
+          }
+          /* .game-grid was not defined, so I'm commenting this out
+          .game-grid {
+            grid-template-columns: 1fr;
+          }
+          */
+          /* .countdown-timer was not defined
+          .countdown-timer {
+            gap: 10px;
+          }
+          .time-box {
+            min-width: 70px;
+            padding: 10px;
+          }
+          .time-box .time-number {
+            font-size: 24px;
+          }
+          */
+          /* .nav-menu was not defined
+          .nav-menu {
+            gap: var(--space-16);
+          }
+          .nav-link {
+            font-size: 8px;
+          }
+          */
+          .form-grid {
+            grid-template-columns: 1fr;
+            padding-top: 20px; /* Reduced top padding */
+            padding-left: 10px;  /* Match registration-form padding */
+            padding-right: 10px; /* Match registration-form padding */
+          }
+          .competitions-grid {
+            grid-template-columns: 1fr;
+          }
+          .progress-bar {
+            justify-content: center;
+            gap: 16px; /* Added more gap for wrapped items */
+          }
+          .progress-step {
+            flex: none;
+            min-width: 80px; /* Slightly smaller min-width */
+          }
+          /* Make step label text slightly larger */
+          .step-label {
+            font-size: 9px; 
+          }
+          .form-navigation {
+            flex-direction: column;
+            gap: 15px; /* Added gap for column layout */
+          }
+          /* .glitch-text was not defined
+          .glitch-text {
+            font-size: 24px;
+          }
+          */
+           .game-section {
+            padding: 30px 10px; /* Reduced padding for mobile */
+           }
+           .registration-form {
+             width: 100%;
+             padding: 10px; /* Add some padding */
+             border-width: 1px; /* Thinner border on mobile */
+           }
+           /* Form grid padding was already set above
+           .form-grid {
+             padding-left: 10px;
+             padding-right: 10px;
+           }
+           */
+           /* Improve review section layout on mobile */
+           .review-item {
+             flex-direction: column; /* Stack label and value */
+             align-items: flex-start; /* Align left */
+             margin-bottom: var(--space-8);
+           }
+           .review-value {
+             text-align: left; /* Align value left */
+             flex-basis: auto; /* Reset basis */
+             color: var(--pixel-white); /* Change color to be less confusing */
+           }
+           .review-item[style*="border-top"] .review-value {
+             color: var(--pixel-yellow); /* Keep total yellow */
+           }
+        }
+
+        /* Registration Form Container */
+        .registration-form {
+          /* justify-self: center; */ /* Not a valid property here */
+          /* justify-content: center; */ /* Not a valid property here */
+          margin: 0 auto; /* Center the form */
+          width: 100%; /* Make it responsive */
+          max-width: 1200px; /* Max width from nav-container */
+          background: var(--darker-bg);
+          border: 2px solid var(--pixel-green);
+          padding: 20px; /* Added padding */
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: var(--space-32);
+          flex-wrap: wrap;
+          gap: var(--space-8);
+        }
+
+        .progress-step {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: var(--space-8);
+          min-width: 100px;
+        }
+
+        .step-number {
+          width: 40px;
+          height: 40px;
+          border: 2px solid var(--pixel-green);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          color: var(--pixel-green);
+          background: var(--dark-bg);
+          transition: all 0.3s ease;
+        }
+
+        .step-label {
+          font-size: 8px;
+          color: var(--pixel-green);
+          text-align: center;
+        }
+
+        .progress-step.active .step-number {
+          background: var(--pixel-green);
+          color: var(--dark-bg);
+          box-shadow: 0 0 10px var(--pixel-green);
+        }
+
+        .progress-step.completed .step-number {
+          background: var(--pixel-cyan);
+          border-color: var(--pixel-cyan);
+          color: var(--dark-bg);
+        }
+
+        /* Form Steps */
+        .form-step {
+          display: none;
+          animation: fadeIn 0.5s ease;
+        }
+
+        .form-step.active {
+          display: block;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateX(20px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Step titles */
+        .step-title {
+          font-size: 16px;
+          color: var(--pixel-cyan);
+          text-align: center;
+          margin-bottom: var(--space-32);
+          text-shadow: 0 0 5px var(--pixel-cyan);
+        }
+
+        /* Form grid layout */
+        .form-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+          gap: 20px;
+          padding-top: 40px;
+          padding-left: 20px; /* Adjusted padding */
+          padding-right: 20px; /* Adjusted padding */
+        }
+
+        /* Input groups */
+        .input-group {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-8);
+          /* padding: 20px; */ /* Padding was making grid uneven */
+          align-content: center;
+        }
+
+        .input-group label {
+          font-size: 10px;
+          color: var(--pixel-yellow);
+          letter-spacing: 1px;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+          background: var(--dark-bg);
+          border: 2px solid var(--pixel-green);
+          color: var(--pixel-green);
+          padding: var(--space-12);
+          font-family: var(--font-family-pixel);
+          font-size: 10px;
+          transition: all 0.3s ease;
+          height: 40px; /* Standard height */
+          padding-left: 20px;
+          width: 100%; /* Ensure inputs fill container */
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+          outline: none;
+          border-color: var(--pixel-cyan);
+          box-shadow: 0 0 10px var(--pixel-cyan);
+          background: rgba(0, 255, 255, 0.1);
+        }
+
+        .input-group textarea {
+          resize: vertical;
+          min-height: 100px;
+          height: auto;
+        }
+
+        /* Error message styling */
+        .error-message {
+          font-size: 8px;
+          color: var(--pixel-red);
+          min-height: 16px;
+        }
+
+        /* Competitions grid */
+        .competitions-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: var(--space-16);
+        }
+
+        .competition-card {
+          background: var(--dark-bg);
+          border: 2px solid var(--pixel-green);
+          padding: var(--space-20);
+          transition: all 0.3s ease;
+          position: relative;
+          cursor: pointer; /* Indicate clickable */
+        }
+
+        .competition-card:hover {
+          border-color: var(--pixel-cyan);
+          box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .competition-card.selected {
+          border-color: var(--pixel-yellow);
+          background: rgba(255, 255, 0, 0.1);
+        }
+
+        .competition-checkbox {
+          position: absolute;
+          top: var(--space-12);
+          right: var(--space-12);
+          width: 20px;
+          height: 20px;
+          appearance: none;
+          border: 2px solid var(--pixel-green);
+          background: var(--dark-bg);
+        }
+
+        .competition-checkbox:checked {
+          background: var(--pixel-yellow);
+          border-color: var(--pixel-yellow);
+        }
+
+        .competition-name {
+          font-size: 12px;
+          color: var(--pixel-cyan);
+          margin-bottom: var(--space-8);
+        }
+
+        .competition-type {
+          font-size: 8px;
+          color: var(--pixel-purple);
+          text-transform: uppercase;
+          margin-bottom: var(--space-8);
+        }
+
+        .competition-description {
+          font-size: 8px;
+          color: var(--pixel-green);
+          line-height: 1.4;
+        }
+
+        /* Team Section */
+        .team-section {
+          text-align: center;
+        }
+
+        .team-note {
+          font-size: 10px;
+          color: var(--pixel-yellow);
+          margin-bottom: var(--space-24);
+        }
+
+        .team-member {
+          background: var(--dark-bg);
+          border: 1px solid var(--pixel-green);
+          padding: var(--space-16);
+          margin-bottom: var(--space-16);
+        }
+
+        .team-member h4 {
+          font-size: 10px;
+          color: var(--pixel-cyan);
+          margin-bottom: var(--space-12);
+        }
+
+        /* Review Section */
+        .review-section {
+          background: var(--dark-bg);
+          border: 1px solid var(--pixel-green);
+          padding: var(--space-20);
+        }
+
+        .review-category {
+          margin-bottom: var(--space-20);
+          padding-bottom: var(--space-16);
+          border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .review-category:last-child {
+          border-bottom: none;
+        }
+
+        .review-category h4 {
+          font-size: 10px;
+          color: var(--pixel-yellow);
+          margin-bottom: var(--space-8);
+        }
+
+        .review-item {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap; /* Allow wrapping on small screens */
+          margin-bottom: var(--space-4);
+          font-size: 8px;
+        }
+
+        .review-label {
+          color: var(--pixel-green);
+          margin-right: 10px; /* Add spacing */
+        }
+
+        .review-value {
+          color: var(--pixel-cyan);
+          text-align: right; /* Align value to the right */
+          flex-basis: 50%; /* Allow value to take space */
+          flex-grow: 1;
+        }
+
+        /* Navigation Buttons */
+        .form-navigation {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap; /* Allow wrapping */
+          margin-top: var(--space-32);
+          gap: 20px; /* Reduced gap */
+        }
+
+        .btn {
+          padding: 11px 24px;
+          border: 2px solid var(--pixel-green);
+          background: var(--dark-bg);
+          color: var(--pixel-green);
+          font-family: var(--font-family-pixel);
+          font-size: 10px;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          cursor: pointer;
+        }
+
+        .btn:hover {
+          background: var(--pixel-green);
+          color: var(--dark-bg);
+          box-shadow: 0 0 10px var(--pixel-green);
+        }
+
+        .btn-submit {
+          border-color: var(--pixel-yellow);
+          color: var(--pixel-yellow);
+          animation: submitGlow 2s infinite;
+        }
+
+        .btn-submit:hover {
+          background: var(--pixel-yellow);
+          color: var(--dark-bg);
+        }
+
+        @keyframes submitGlow {
+          0%, 100% { box-shadow: 0 0 5px var(--pixel-yellow); }
+          50% { box-shadow: 0 0 20px var(--pixel-yellow), 0 0 30px var(--pixel-yellow); }
+        }
+
+        .btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .hidden {
+          display: none !important;
+        }
+
+        /* Modal */
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10001; /* Ensure it's above scanlines */
+          padding: 15px;
+        }
+
+        .modal-content {
+          background: var(--darker-bg);
+          border: 3px solid var(--pixel-green);
+          padding: var(--space-32);
+          text-align: center;
+          max-width: 400px;
+          width: 100%;
+          animation: modalAppear 0.5s ease;
+        }
+
+        @keyframes modalAppear {
+          from { transform: scale(0.8); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+
+        .success-animation {
+          margin-bottom: var(--space-24);
+        }
+
+        .pixel-checkmark {
+          width: 60px;
+          height: 60px;
+          margin: 0 auto;
+          border: 3px solid var(--pixel-green);
+          position: relative;
+          animation: checkmarkGlow 2s infinite;
+        }
+
+        .pixel-checkmark::after {
+          content: '✓';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 24px;
+          color: var(--pixel-green);
+        }
+
+        @keyframes checkmarkGlow {
+          0%, 100% { box-shadow: 0 0 10px var(--pixel-green); }
+          50% { box-shadow: 0 0 20px var(--pixel-green), 0 0 30px var(--pixel-green); }
+        }
+
+        .success-title {
+          font-size: 14px;
+          color: var(--pixel-cyan);
+          margin-bottom: var(--space-16);
+          text-shadow: 0 0 5px var(--pixel-cyan);
+        }
+
+        .success-message {
+          font-size: 8px;
+          color: var(--pixel-green);
+          line-height: 1.4;
+          margin-bottom: var(--space-24);
+        }
+
+        /* Error state styling */
+        .form-control.error,
+        input.error,
+        select.error,
+        textarea.error {
+          border-color: var(--pixel-red) !important;
+          box-shadow: 0 0 5px var(--pixel-red) !important;
+        }
+
+        /* Autofill background removal */
+        .input-group input:-webkit-autofill,
+        .input-group input:-webkit-autofill:hover,
+        .input-group input:-webkit-autofill:focus,
+        .input-group input:-webkit-autofill:active {
+          -webkit-box-shadow: 0 0 0px 1000px var(--dark-bg) inset !important;
+          box-shadow: 0 0 0px 1000px var(--dark-bg) inset !important;
+          -webkit-text-fill-color: var(--pixel-green) !important;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
 </head>
 <body>
-    <!-- Sound Toggle Button -->
-    <div class="sound-toggle">
-        <button id="soundToggle" class="sound-btn" title="Toggle Sound">
-            <span class="sound-icon">🔊</span>
-        </button>
-    </div>
+    <!-- Sound Toggle Button (Element was missing in original HTML) -->
+    <!-- <button id="soundToggle" class="btn">SOUND: ON</button> -->
 
     <!-- Animated Background -->
     <div class="pixel-grid"></div>
     <div class="scan-lines"></div>
     
     <!-- Navigation -->
-    <nav class="navbar">
+   <nav>
         <div class="nav-container">
-            <div class="nav-logo">
-                <span class="logo-text">TECHFEST</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link">HOME</a></li>
-                <li><a href="#" class="nav-link">PRIZES</a></li>
-                <li><a href="#" class="nav-link">CONTACT</a></li>
+            <div class="logo">LOCUS</div>
+            <ul class="nav-links">
+                <li><a href="/index.html">HOME</a></li> <!-- Removed invalid path -->
+                <!-- <li><a href="#guest">Register now</a></li> -->
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="glitch-text glitch" data-text="REGISTER NOW">REGISTER NOW</h1>
-            <p class="hero-subtitle">JOIN THE ULTIMATE TECH COMPETITION</p>
-            <div class="pixel-divider"></div>
+   <section id="home" class="hero">
+        <div class="hero-content" id="hero-content">
+            <h1 class="game-title glitch" data-text="register now">Register now</h1>
+            <div class="subtitle glitch" data-text="JOIN THE ULTIMATE TECH QUEST">JOIN THE ULTIMATE TECH QUEST</div>
         </div>
     </section>
 
-    <!-- Registration Form Container -->
-    <div class="form-container">
-        <div class="progress-bar">
-            <div class="progress-step active" data-step="1">
-                <span class="step-number">1</span>
-                <span class="step-label">PERSONAL INFO</span>
-            </div>
-            <div class="progress-step" data-step="2">
-                <span class="step-number">2</span>
-                <span class="step-label">COMPETITIONS</span>
-            </div>
-            <div class="progress-step" data-step="3">
-                <span class="step-number">3</span>
-                <span class="step-label">TEAM INFO</span>
-            </div>
-            <div class="progress-step" data-step="4">
-                <span class="step-number">4</span>
-                <span class="step-label">ADDITIONAL</span>
-            </div>
-            <div class="progress-step" data-step="5">
-                <span class="step-number">5</span>
-                <span class="step-label">REVIEW</span>
-            </div>
-        </div>
-
-        <form id="registrationForm" class="registration-form">
+   
+    <form id="registrationForm" class="registration-form" style="min-height:600px; height: auto;"> <!-- Fixed invalid ID and problematic fixed height -->
+         <!-- Registration Form Container -->
+        <section id="competitions" class="game-section" style="border-bottom: none; padding: 20px 0;"> <!-- Removed extra padding/border -->
+            <div class="form-container">
+             <div class="progress-bar">
+                    <div class="progress-step active" data-step="1">
+                       <span class="step-number">1</span>
+                     <span class="step-label">PERSONAL INFO</span>
+                 </div>
+                  <div class="progress-step" data-step="2">
+                        <span class="step-number">2</span>
+                      <span class="step-label">EVENTS</span>
+                   </div>
+                   <div class="progress-step" data-step="3">
+                        <span class="step-number">3</span>
+                      <span class="step-label">REVIEW</span>
+                  </div>
+             </div>
+         </div>
+         </section>
             <!-- Step 1: Personal Information -->
             <div class="form-step active" data-step="1">
-                <h2 class="step-title">PERSONAL INFORMATION</h2>
+                <h2 class="logo" style="text-align: center; margin-bottom: 20px;">PERSONAL INFORMATION</h2> <!-- Centered title -->
                 <div class="form-grid">
                     <div class="input-group">
                         <label for="fullName">FULL NAME</label>
-                        <input type="text" id="fullName" name="fullName" required>
+                        <input type="text" id="fullName" name="fullName" required >
                         <div class="error-message"></div>
                     </div>
                     <div class="input-group">
@@ -82,11 +908,13 @@
                         <input type="email" id="email" name="email" required>
                         <div class="error-message"></div>
                     </div>
+                    
                     <div class="input-group">
                         <label for="phone">PHONE NUMBER</label>
                         <input type="tel" id="phone" name="phone" required>
                         <div class="error-message"></div>
                     </div>
+                    
                     <div class="input-group">
                         <label for="institution">COLLEGE/INSTITUTION</label>
                         <input type="text" id="institution" name="institution" required>
@@ -102,21 +930,24 @@
                     <!-- Competitions will be populated by JavaScript -->
                 </div>
             </div>
-            <!-- Step 5: Review & Submit -->
-            <div class="form-step" data-step="5">
+            <!-- Step 3: Review & Submit -->
+            <div class="form-step" data-step="3">
                 <h2 class="step-title">REVIEW REGISTRATION</h2>
                 <div id="reviewSection" class="review-section">
                     <!-- Review content will be populated by JavaScript -->
                 </div>
             </div>
+
             <!-- Navigation Buttons -->
             <div class="form-navigation">
                 <button type="button" id="prevBtn" class="btn btn-secondary">← BACK</button>
                 <button type="button" id="nextBtn" class="btn btn-primary">NEXT →</button>
-                <button type="submit" id="submitBtn" class="btn btn-submit hidden">REGISTER!</button>
+                <!-- Changed button text -->
+                <button type="submit" id="submitBtn" class="btn btn-submit">PROCEED TO PAYMENT</button>
+
             </div>
-        </form>
-    </div>
+    </form>
+    
 
     <!-- Success Modal -->
     <div id="successModal" class="modal hidden">
@@ -126,10 +957,626 @@
             </div>
             <h2 class="success-title">REGISTRATION SUCCESSFUL!</h2>
             <p class="success-message">Your registration has been submitted successfully. Check your email for confirmation.</p>
-            <button class="btn btn-primary" onclick="closeSuccessModal()">AWESOME!</button>
+            <button id="closeModalBtn" class="btn btn-primary">AWESOME!</button> <!-- Added ID -->
         </div>
     </div>
+   
 
-    <script src="app.js"></script>
+    <!-- External script for Tone.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    
+    <!-- Combined and fixed application script -->
+    <script>
+        // Application data
+        const appData = {
+          competitions: [
+            {
+              id: "bytesketch",
+              name: "BYTESKETCH",
+              type: "Individual ",
+              description: "Unleash your creativity and let your pixels do the talking ! Design a visually stunning poster that captures the theme and win big",
+              price: 50,
+              currency: "INR",
+              
+            },
+            {
+              id: "neotechexpo",
+              name: "NEOTECH EXPO",
+              type: "Team(max3)",
+              description: "Showcase your innovative projects at Neotech Expo.Comptete with top minds,wi exciting prizes, and win the premier exhibition.",
+              price: 50,
+              currency: "INR",
+              maxTeamSize: 3
+            },
+            
+            {
+              id: "logo",
+              name: "CRE8-LOGO",
+              type: "individual",
+              description: "Show your creativity by designing unique app logos. Compete for top positions, recognition, and exciting prizes!",
+              price: 50,
+              currency: "INR"
+            },
+            {
+              id: "webdesign",
+              name: "WEB WIZARD",
+              type: "individual",
+              description: "Participate in our frontend web designing competition. Create stunning, responsive websites using only HTML, CSS, and creativity!",
+              price: 50,
+              currency: "INR"
+            },
+            {
+              id: "seminar",
+              name: "INSIGHT SUMMIT",
+              type: "team",
+              description: "Prove your expertise and  deliver a compelling technical seminar with clarity and confidence to win this battle of intellect.",
+              price: 50,
+              currency: "INR",
+              maxTeamSize: 4
+            },
+            {
+              id: "typing",
+              name: "KEY STORM",
+              type: "Individual",
+              description: "Test your typinf speed and accuracy.Competer for first and second place.Fastest,most accurate typist wins.Register now",
+              price: 30,
+              currency: "INR"
+            },
+            {
+              id: "coding",
+              name: "CODE QUEST",
+              type: "Individual",
+              description: "Join our two-phase coding competition:reverse engineering outputs,debug faulty code,test your skills and comptete for exciting prize",
+              price: 50,
+              currency: "INR"
+            },
+            {
+              id: "quiz",
+              name: "QUIZTRIX",
+              type: "Team",
+              description: "Join powerful tech guilds seeking new members! Connect with other adventurers and form your ultimate party.",
+              price: 50,
+              currency: "INR",
+              maxTeamSize: 3 ,
+              minTeamSize: 2
+        
+            },
+            {
+              id:"freefire",
+              name:"LOOT N SHOOT",
+              type: "Must have 4 members",
+              description:"Assemble your squad for a fast-paced mobile battle royale.Fight,survive and be the last team standing to claim the Booyah!",
+              price: 100 ,
+              currency:"INR",
+              maxTeamSize:4
+            },
+            {
+              id:"minimilitia",
+              name:"MILITIA MAYHEM",
+              type:"Team",
+              description:"Grab your jetpack and dive into the chaotic 2D mayhem ! Dodge,shoot and blast your way through opponents  in this  classic  shooter showdown.",
+              price:100,
+              currency:"INR",
+              maxTeamSize: 4
+            },
+            {
+              id:"pespvp",
+              name:"Iconic Clash(PVP)",
+              type:"Individual",
+              description:"Take to the virtual pitch and showcase your football mastery on a 1v1",
+              price:100,
+              currency:"INR",
+            },
+            {
+              id:"pescoop",
+              name:"ICONIC CLASH(CO-OP)",
+              type: "Team",
+              description: "Take to the virtual pitch and showcase your team play and win exciting prizes",
+              price:150,
+              currency:"INR",
+              maxTeamSize:3
+            },
+            {
+              id:"bgmi",
+              name:"RED ZONE",
+              type:"Team",
+              description: "Drop into India's favourite battlegrounds with your squad.Strategize,loot, and survive to claim that coveted 'Winner Winner Chicken Dinner!'",
+              price:200,
+              currency:"INR",
+              maxTeamSize:4
+            },
+            {
+              id:"football",
+              name:"FINAL WHISTLE",
+              type:"Team",
+              description:"This is a 3v3 football on a small pitch.A fast-paced game of quick  goals where pure skill and relentless teamwork decide the champion.",
+              price:600,
+              currency:"INR",
+              maxTeamSize:5
+            },
+            {
+              id:"treasurehunt",
+              name:"THE LOST KEY",
+              type:"Team",
+              description:"Embarks on the  quest for the Lost-Key solve cryptic,puzzles,unlock secrets and claim the glory that awaits the bold ",
+              price:2,
+              currency:"INR",
+              maxTeamSize:3
+            }
+
+
+
+          ]
+        };
+
+        // Global variables
+        let currentStep = 1;
+        let totalSteps = 3;
+        let selectedCompetitions = [];
+        let formData = {};
+
+        // DOM elements
+        let form, prevBtn, nextBtn, submitBtn, successModal, closeModalBtn;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+          // Assign DOM elements inside the listener
+          form = document.getElementById('registrationForm');
+          prevBtn = document.getElementById('prevBtn');
+          nextBtn = document.getElementById('nextBtn');
+          submitBtn = document.getElementById('submitBtn');
+          successModal = document.getElementById('successModal');
+          closeModalBtn = document.getElementById('closeModalBtn');
+
+          // Ensure elements exist before adding listeners
+          if (form && prevBtn && nextBtn && submitBtn && successModal && closeModalBtn) {
+            initializeForm();
+            setupEventListeners();
+            setupSoundEvents();
+            updateStep();
+          } else {
+            console.error("Form elements not found. Initialization failed.");
+          }
+        });
+
+        function initializeForm() {
+          populateCompetitions();
+        }
+
+        function populateCompetitions() {
+          const grid = document.getElementById('competitionsGrid');
+          if (!grid) return; // Guard clause
+          
+          grid.innerHTML = '';
+          
+          appData.competitions.forEach(competition => {
+            const card = document.createElement('div');
+            card.className = 'competition-card';
+            card.setAttribute('data-competition', competition.id);
+            
+            card.innerHTML = `
+              <input type="checkbox" class="competition-checkbox" id="comp-${competition.id}" value="${competition.id}">
+              <div class="competition-name">${competition.name}</div>
+              <div class="competition-type">${competition.type.toUpperCase()}${competition.maxTeamSize ? ` (Max ${competition.maxTeamSize} members)` : ''}</div>
+              <div class="competition-description">${competition.description}</div>
+              <div style="font-size: 8px; color: var(--pixel-yellow); margin-top: 8px;">₹${competition.price}</div>
+            `;
+            
+            // Add click event to the card
+            card.addEventListener('click', (e) => {
+              if (e.target.type !== 'checkbox') {
+                const checkbox = card.querySelector('.competition-checkbox');
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    toggleCompetitionSelection(competition.id, checkbox.checked);
+                }
+              }
+            });
+            
+            // Add change event to the checkbox
+            const checkbox = card.querySelector('.competition-checkbox');
+            if(checkbox) {
+                checkbox.addEventListener('change', (e) => {
+                  e.stopPropagation();
+                  toggleCompetitionSelection(competition.id, e.target.checked);
+                });
+            }
+            
+            grid.appendChild(card);
+          });
+        }
+
+        function toggleCompetitionSelection(competitionId, isSelected) {
+          const card = document.querySelector(`[data-competition="${competitionId}"]`);
+          if (!card) return;
+          
+          if (isSelected) {
+            card.classList.add('selected');
+            if (!selectedCompetitions.includes(competitionId)) {
+              selectedCompetitions.push(competitionId);
+            }
+          } else {
+            card.classList.remove('selected');
+            selectedCompetitions = selectedCompetitions.filter(id => id !== competitionId);
+          }
+        }
+
+        function setupEventListeners() {
+          // Navigation buttons
+          prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            prevStep();
+          });
+          
+          nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            nextStep();
+          });
+          
+          // Form submission
+          form.addEventListener('submit', handleSubmit);
+
+          // Modal close button
+          closeModalBtn.addEventListener('click', closeSuccessModal);
+          
+          // Sound toggle (Element is commented out in HTML)
+          // const soundToggle = document.getElementById('soundToggle');
+          // if (soundToggle) {
+          //   soundToggle.addEventListener('click', toggleSound);
+          // }
+          
+          // Setup input validation
+          // Note: setupInputSoundEvents was not defined in original app.js
+          const inputs = form.querySelectorAll('input[required], select[required]');
+          inputs.forEach(input => {
+              input.addEventListener('input', clearError);
+              input.addEventListener('blur', validateInput);
+          });
+        }
+
+        function setupSoundEvents() {
+            // --- Sound Engine using Tone.js ---
+            if (typeof Tone === 'undefined') {
+                console.error('Tone.js not loaded, sounds disabled.');
+                return;
+            }
+
+            const synth = new Tone.Synth({
+                oscillator: { type: 'square' },
+                envelope: {
+                    attack: 0.005,
+                    decay: 0.1,
+                    sustain: 0.3,
+                    release: 0.2,
+                },
+            }).toDestination();
+
+            // Variable to track last hover sound time for debouncing
+            let lastHoverSoundTime = 0;
+
+            function playSound(note, duration) {
+                if (Tone.context.state !== 'running') {
+                    Tone.context.resume().catch(e => console.error("Tone.js resume error:", e));
+                }
+                try {
+                    // Stop any previous sound immediately before starting a new one
+                    // And schedule the new sound to start 'now'
+                    synth.triggerAttackRelease(note, duration, Tone.now());
+                } catch (e) {
+                    // We can safely ignore the "start time" error here if it still happens,
+                    // but the debounce should prevent it.
+                    if (!e.message.includes("Start time")) {
+                      console.error("Tone.js play error:", e);
+                    }
+                }
+            }
+
+            // Click sound for all interactive elements
+            document.querySelectorAll('a, button, .btn').forEach(element => {
+                element.addEventListener('click', () => playSound('C4', '8n'));
+            });
+
+            // Hover sound for game cards and nav links (DEBOUNCED)
+            document.querySelectorAll('.game-card, .nav-links a, .competition-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const now = Tone.now();
+                    // Only play if 100ms have passed since the last hover sound
+                    if (now - lastHoverSoundTime > 0.1) {
+                        playSound('C5', '16n');
+                        lastHoverSoundTime = now;
+                    }
+                });
+            });
+        }
+
+        function toggleSound() {
+          // This function was empty in the original app.js
+          // You could add logic here to mute/unmute Tone.js
+          // e.g., Tone.Destination.mute = !Tone.Destination.mute;
+          console.log("Sound toggle clicked (functionality not implemented)");
+        }
+
+        function nextStep() {
+          if (validateCurrentStep()) {
+            if (currentStep === 2 && selectedCompetitions.length === 0) {
+              showError('Please select at least one competition.');
+              return;
+            }
+            if (currentStep < totalSteps) { // Prevent going past step 3
+                currentStep++;
+                updateStep();
+            }
+          }
+        }
+
+        function prevStep() {
+          if (currentStep > 1) { // Prevent going before step 1
+            currentStep--;
+            updateStep();
+          }
+        }
+
+        function updateStep() {
+          // Update progress bar
+          document.querySelectorAll('.progress-step').forEach((step, index) => {
+            const stepNum = index + 1;
+            step.classList.remove('active', 'completed');
+            
+            if (stepNum < currentStep) {
+              step.classList.add('completed');
+            } else if (stepNum === currentStep) {
+              step.classList.add('active');
+            }
+          });
+          
+          // Update form steps
+          document.querySelectorAll('.form-step').forEach((step) => {
+            step.classList.remove('active');
+            if (parseInt(step.getAttribute('data-step')) === currentStep) {
+              step.classList.add('active');
+            }
+          });
+          
+          // Update navigation buttons
+          prevBtn.style.display = currentStep === 1 ? 'none' : 'inline-flex';
+          
+          if (currentStep === totalSteps) {
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+            populateReviewSection();
+          } else {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+          }
+        }
+
+        function validateCurrentStep() {
+          const currentStepElement = document.querySelector(`.form-step[data-step="${currentStep}"]`);
+          if (!currentStepElement) {
+            return false;
+          }
+          
+          const requiredInputs = currentStepElement.querySelectorAll('input[required], select[required]');
+          let isValid = true;
+          
+          requiredInputs.forEach(input => {
+            if (!validateInput({ target: input })) {
+              isValid = false;
+            }
+          });
+          
+          return isValid;
+        }
+
+        function validateInput(e) {
+          const input = e.target;
+          const errorElement = input.parentNode.querySelector('.error-message');
+          let isValid = true;
+          let errorMessage = '';
+          
+          // Clear previous error
+          if (errorElement) {
+            errorElement.textContent = '';
+          }
+          input.classList.remove('error');
+          
+          // Required field validation
+          if (input.hasAttribute('required') && !input.value.trim()) {
+            errorMessage = 'This field is required.';
+            isValid = false;
+          }
+          
+          // Email validation
+          if (isValid && input.type === 'email' && input.value.trim()) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value.trim())) {
+              errorMessage = 'Please enter a valid email address.';
+              isValid = false;
+            }
+          }
+          
+          // Phone validation
+          if (isValid && input.type === 'tel' && input.value.trim()) {
+            const phoneValue = input.value.trim().replace(/[\s\-\(\)]/g, '');
+            if (phoneValue.length < 10 || !/^\+?[\d]+$/.test(phoneValue)) {
+              errorMessage = 'Please enter a valid phone number (at least 10 digits).';
+              isValid = false;
+            }
+          }
+          
+          // Show error if invalid
+          if (!isValid && errorElement) {
+            errorElement.textContent = errorMessage;
+            input.classList.add('error');
+          }
+          
+          return isValid;
+        }
+
+        function clearError(e) {
+          const input = e.target;
+          const errorElement = input.parentNode.querySelector('.error-message');
+          if (errorElement) {
+            errorElement.textContent = '';
+          }
+          input.classList.remove('error');
+        }
+
+        function showError(message) {
+          // Create temporary error display
+          let errorDiv = document.querySelector('.global-error');
+          if (errorDiv) {
+              errorDiv.remove(); // Remove existing error first
+          }
+
+          errorDiv = document.createElement('div');
+          errorDiv.className = 'global-error';
+          errorDiv.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--pixel-red);
+            color: var(--dark-bg);
+            padding: 12px 20px;
+            font-family: var(--font-family-pixel);
+            font-size: 10px;
+            z-index: 10001;
+            animation: slideIn 0.3s ease;
+            border: 2px solid var(--dark-bg);
+          `;
+          errorDiv.textContent = message;
+          document.body.appendChild(errorDiv);
+          
+          setTimeout(() => {
+            if (errorDiv) {
+                errorDiv.remove();
+            }
+          }, 3000);
+        }
+
+        function collectFormData() {
+          const data = {
+            personal: {
+              fullName: document.getElementById('fullName').value,
+              email: document.getElementById('email').value,
+              phone: document.getElementById('phone').value,
+              institution: document.getElementById('institution').value
+            },
+            competitions: selectedCompetitions,
+          };
+          
+          // Calculate total price
+          data.totalPrice = selectedCompetitions.reduce((total, compId) => {
+            const comp = appData.competitions.find(c => c.id === compId);
+            return total + (comp ? comp.price : 0);
+          }, 0);
+          return data;
+        }
+
+        function populateReviewSection() {
+          const reviewSection = document.getElementById('reviewSection');
+          if (!reviewSection) return;
+
+          const data = collectFormData();
+          
+          let html = `
+            <div class="review-category">
+              <h4>Personal Information</h4>
+              <div class="review-item">
+                <span class="review-label">Full Name:</span>
+                <span class="review-value">${data.personal.fullName}</span>
+              </div>
+              <div class="review-item">
+                <span class="review-label">Email:</span>
+                <span class="review-value">${data.personal.email}</span>
+              </div>
+              <div class="review-item">
+                <span class="review-label">Phone:</span>
+                <span class="review-value">${data.personal.phone}</span>
+              </div>
+              <div class="review-item">
+                <span class="review-label">Institution:</span>
+                <span class="review-value">${data.personal.institution}</span>
+              </div>
+            </div>
+            
+            <div class="review-category">
+              <h4>Selected Competitions</h4>
+          `;
+          
+          if (data.competitions.length > 0) {
+              data.competitions.forEach(compId => {
+                const comp = appData.competitions.find(c => c.id === compId);
+                if (comp) {
+                    html += `
+                      <div class="review-item">
+                        <span class="review-label">${comp.name}:</span>
+                        <span class="review-value">₹${comp.price} (${comp.type.toUpperCase()})</span>
+                      </div>
+                    `;
+                }
+              });
+          } else {
+              html += `<div class="review-item"><span class="review-label">No competitions selected.</span></div>`;
+          }
+          
+          html += `
+              <div class="review-item" style="border-top: 1px solid var(--pixel-green); margin-top: 8px; padding-top: 8px;">
+                <span class="review-label" style="font-weight: bold;">Total Amount:</span>
+                <span class="review-value" style="color: var(--pixel-yellow); font-weight: bold;">₹${data.totalPrice}</span>
+              </div>
+            </div>
+          `;
+          
+          reviewSection.innerHTML = html;
+        }
+
+     async function handleSubmit(e) {
+  e.preventDefault();
+
+  const data = collectFormData();
+  const totalAmount = data.totalPrice;
+
+  if (totalAmount <= 0) {
+    alert("Select at least one event");
+    return;
+  }
+
+  const res = await fetch("/api/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount: totalAmount })
+  });
+
+  const order = await res.json();
+
+  if (!order.orderId) {
+    alert("Failed to create order");
+    console.error(order);
+    return;
+  }
+
+  const options = {
+    key: order.key,
+    amount: order.amount,
+    currency: "INR",
+    name: "LOCUS 2K26",
+    description: "Event Registration",
+    order_id: order.orderId,
+    handler: function (response) {
+      alert("Payment success (TEST MODE)");
+      console.log(response);
+    },
+    theme: {
+      color: "#00ff00"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+
+
+    </script>
 </body>
 </html>
