@@ -1,2 +1,2 @@
-# someone : hola amigos 
-# me : hola ma amigos
+hello im Uwaise Thoppil
+and i own this website hahahahahah
