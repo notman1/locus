@@ -443,7 +443,7 @@ nav {
     font-family: 'Press Start 2P', monospace;
     font-size: 12px;
     text-transform: uppercase;
-    transition: all 0.2s ease;
+    transition: all 0.7s ease;
     box-shadow: 4px 4px 0px var(--pixel-blue);
 }
 
